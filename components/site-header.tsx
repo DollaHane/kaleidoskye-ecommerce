@@ -1,10 +1,11 @@
 import Link from "next/link"
+import { Cog } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
+
+import { Button } from "./ui/button"
 
 export function SiteHeader() {
   return (
@@ -12,36 +13,21 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav items={siteConfig.mainNav} />
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.gitHub className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
+          <nav className="flex items-center space-x-5">
+            <Link href="/">
+              <div className="border p-2 rounded-lg border-muted shadow-md hover:bg-muted">
+                Dashboard
               </div>
             </Link>
-            <Link
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.twitter className="h-5 w-5 fill-current" />
-                <span className="sr-only">Twitter</span>
+            <Link href="/assets">
+              <div className="border p-2 rounded-lg border-muted shadow-md hover:bg-muted">
+                Assets
               </div>
+            </Link>
+            <Link href="/settings">
+              <Button variant="ghost" size="icon">
+                <Cog className="flex w-full" />
+              </Button>
             </Link>
             <ThemeToggle />
           </nav>
