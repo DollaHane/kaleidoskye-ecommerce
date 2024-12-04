@@ -1,10 +1,17 @@
+
 import React from 'react'
 
-export default async function BuildingAssets() {
+interface PageProps {
+  params: {
+    buildingId: string
+  }
+}
 
-  // get all assets where building id
+export default async function BuildingAssets({params}: PageProps) {
+  const param = params
+  const decodedParam = decodeURIComponent(param.buildingId)
 
   return (
-    <div>page</div>
+    <div>{decodedParam}</div>
   )
 }

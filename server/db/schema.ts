@@ -14,7 +14,66 @@ import {
 
 import { Status } from "@/types/status"
 
+// *** AUTH ***
+export const sessions = pgTable("sessions", {
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .notNull()
+    .unique("sessions__sessionToken__idx"),
+  sessionToken: varchar("sessionToken", { length: 255 }).notNull(),
+  userId: varchar("userId", { length: 255 }).notNull(),
+  expires: timestamp("expires").notNull(),
+  createdAt: timestamp("createdAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+})
 
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}))
+
+export const accounts = pgTable("accounts", {
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .notNull()
+    .unique("accounts__provider__providerAccountId__idx"),
+  userId: varchar("userId", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  type: varchar("type", { length: 255 }).notNull(),
+  provider: varchar("provider", { length: 255 }).notNull(),
+  providerAccountId: varchar("providerAccountId", { length: 255 }).notNull(),
+  access_token: text("access_token"),
+  expires_in: integer("expires_in"),
+  id_token: text("id_token"),
+  refresh_token: text("refresh_token"),
+  refresh_token_expires_in: integer("refresh_token_expires_in"),
+  scope: varchar("scope", { length: 255 }),
+  token_type: varchar("token_type", { length: 255 }),
+  createdAt: timestamp("createdAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updatedAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+})
+
+export const verificationTokens = pgTable("verification_tokens", {
+  identifier: varchar("identifier", { length: 255 })
+    .primaryKey()
+    .notNull()
+    .unique("verification_tokens__token__idx"),
+  token: varchar("token", { length: 255 }).notNull(),
+  expires: timestamp("expires").notNull(),
+  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp("updatedAt").default(sql`CURRENT_TIMESTAMP`),
+})
 
 // *** TABLES ***
 export const users = pgTable("users", {
@@ -29,6 +88,7 @@ export const users = pgTable("users", {
   resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry").default(
     sql`CURRENT_TIMESTAMP`
   ),
+  image: varchar("image", { length: 255 }),
   createdAt: timestamp("createdAt")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -62,58 +122,11 @@ export const assets = pgTable("assets", {
   status: varchar("status", { length: 255 }).default(Status.GREEN).notNull(),
 })
 
-export const inspections = pgTable("inspections", {
-  id: varchar("id", { length: 255 })
-    .primaryKey()
-    .notNull()
-    .unique("inspection_id"),
-  assetId: varchar("assetId", { length: 255 })
-    .notNull()
-    .references(() => assets.id),
-  userId: varchar("userId", { length: 255 })
-    .references(() => users.id)
-    .notNull(),
-  createdAt: timestamp("createdAt")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-})
 
-export const tasks = pgTable("tasks", {
-  id: varchar("id", { length: 255 }).primaryKey().notNull().unique("task_id"),
-  title: varchar("title", { length: 255 }).notNull(),
-  assetId: varchar("assetId", { length: 255 })
-    .references(() => assets.id)
-    .notNull()
-    .references(() => assets.id),
-  inspectionId: varchar("inspectionId", { length: 255 }).references(
-    () => inspections.id
-  ),
-  createdAt: timestamp("createdAt")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  dueDate: timestamp("dueDate")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  responsible: varchar("responsible", { length: 255 })
-    .references(() => users.name)
-    .notNull(),
-  status: varchar("status", { length: 255 }).default(Status.RED).notNull(),
-})
+
 
 // *** RELATIONS ***
-export const userRelations = relations(users, ({ many }) => ({
-  tasks: many(tasks),
-}))
-
 export const buildingRelations = relations(buildings, ({ many }) => ({
   assets: many(assets),
 }))
 
-export const assetRelations = relations(assets, ({ many }) => ({
-  tasks: many(tasks),
-  inspections: many(inspections),
-}))
-
-export const inspectionsRelations = relations(tasks, ({ many }) => ({
-  tasks: many(tasks),
-}))

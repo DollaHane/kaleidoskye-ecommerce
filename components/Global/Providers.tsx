@@ -24,9 +24,9 @@ const Providers: FC<LayoutProps> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <SessionProvider> */}
+      <SessionProvider>
         {children}
-      {/* </SessionProvider> */}
+      </SessionProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   )

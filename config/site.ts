@@ -1,9 +1,13 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Asset Management",
+  name: "ACME Management",
   description:
     "Beautifully designed components built with Radix UI and Tailwind CSS.",
+  businessName: "ACME (Pty) Ltd",
+  domain: "https://www.acme.com",
+  domainShort: "ACME.com",
+  supportEmail: "support@acme.com",
   mainNav: [
     {
       title: "Home",

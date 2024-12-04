@@ -2,23 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
-
+import { assetType } from "@/types/db"
 import { Button } from "../ui/button"
 
-export type RhenusAsset = {
-  id: number
-  assetNo: string
-  mfgYr: number
-  make: string
-  model: string
-  sn: string
-  description: string
-  location: string
-  inspectionFreq: number
-  serviceProvider: string
-}
 
-export const assetColumns: ColumnDef<RhenusAsset>[] = [
+export const assetColumns: ColumnDef<assetType>[] = [
   {
     accessorKey: "assetNo",
     header: "Asset No",

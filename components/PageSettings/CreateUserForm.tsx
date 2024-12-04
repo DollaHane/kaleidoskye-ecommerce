@@ -3,10 +3,11 @@
 import React, { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
-import { AxiosError } from "axios"
+import axios, { AxiosError } from "axios"
+import { Loader } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+
 import {
   CreateUserValidationRequest,
   createUserValidation,
@@ -27,6 +28,7 @@ import { Input } from "@/components/ui/input"
 
 export default function CreateUserForm() {
   const [admin, setAdmin] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false)
 
   const form = useForm<z.infer<typeof createUserValidation>>({
     resolver: zodResolver(createUserValidation),
@@ -54,22 +56,34 @@ export default function CreateUserForm() {
       })
     },
     onError: (error: AxiosError) => {
+      setSubmitted(false)
+      if (error.response?.status === 401) {
+        return toast({
+          title: "Authentication Error.",
+          description:
+            "You are either not signed in or you do not have permission to execute this operation. Please contact your administrator.",
+          variant: "destructive",
+        })
+      }
       if (error.response?.status === 400) {
         return toast({
           title: "Data Validation Error.",
-          description: "There was an error processing the data provided. Please try again.",
+          description:
+            "There was an error processing the data provided. Please try again.",
           variant: "destructive",
         })
       }
       if (error.response?.status === 500) {
         return toast({
           title: "Connection Error.",
-          description: "Failed to create user due to a connection error. Please try again.",
+          description:
+            "Failed to create user due to a connection error. Please try again.",
           variant: "destructive",
         })
       }
     },
     onSuccess: () => {
+      setSubmitted(false)
       return toast({
         title: "Success!",
         description: "Successfully created user.",
@@ -89,6 +103,8 @@ export default function CreateUserForm() {
       admin: admin,
     }
     createUser(payload)
+    form.reset()
+    setSubmitted(true)
   }
 
   return (
@@ -146,8 +162,16 @@ export default function CreateUserForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit">
-              Submit
+            <Button
+              type="submit"
+              disabled={submitted}
+              className="relative flex w-20"
+            >
+              {submitted ? (
+                <Loader className="flex absolute h-6 w-6 animate-spin" />
+              ) : (
+                <p>Submit</p>
+              )}
             </Button>
           </form>
         </Form>
