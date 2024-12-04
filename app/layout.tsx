@@ -1,7 +1,13 @@
 import "@/styles/globals.css"
-import { Metadata } from "next"
+import { Metadata, type Viewport } from "next"
+import { redirect } from "next/navigation"
+import { db } from "@/server/db"
+import { users } from "@/server/db/schema"
+import { eq } from "drizzle-orm"
+import { getServerSession } from "next-auth"
 
 import { siteConfig } from "@/config/site"
+import { authOptions, getAuthSession } from "@/lib/auth/auth-options"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
@@ -11,10 +17,6 @@ import NavBar from "@/components/NavBar/NavBar"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import { authOptions, getAuthSession } from "@/lib/auth/auth-options"
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
-import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
   themeColor: [

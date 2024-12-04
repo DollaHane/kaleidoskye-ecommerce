@@ -40,12 +40,9 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   const [submitted, setSubmitted] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [disabled, setDisabled] = useState<boolean>(true)
+  const [input, setInput] = useState<string>('')
   // const captchaKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY!
   // const [captchaValue, setCaptchaValue] = useState<string>("")
-
-  if (!session?.user.email) {
-    router.push("/signin")
-  }
 
   const form = useForm({
     resolver: zodResolver(validateUpdatePassword),
@@ -131,22 +128,23 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   })
 
   function onSubmit(value: z.infer<typeof validateUpdatePassword>) {
-    if (value.newPassword === value.confirmPassword) {
-      const payload: UpdatePasswordCreationRequest = {
-        email: session?.user.email!,
-        previousPassword: value.previousPassword,
-        newPassword: value.newPassword,
-        confirmPassword: value.confirmPassword,
-      }
-      handleMutation(payload)
-      console.log("Submit Payload:", payload)
-    } else {
-      return toast({
-        title: "Password miss match!",
-        description:
-          "The passwords supplied do not match, please re-enter your password",
-      })
-    }
+    console.log('value', value)
+    // if (value.newPassword === value.confirmPassword) {
+    //   const payload: UpdatePasswordCreationRequest = {
+    //     email: session?.user.email!,
+    //     previousPassword: value.previousPassword,
+    //     newPassword: value.newPassword,
+    //     confirmPassword: value.confirmPassword,
+    //   }
+    //   handleMutation(payload)
+    //   console.log("Submit Payload:", payload)
+    // } else {
+    //   return toast({
+    //     title: "Password miss match!",
+    //     description:
+    //       "The passwords supplied do not match, please re-enter your password",
+    //   })
+    // }
   }
 
   // useEffect(() => {
@@ -163,10 +161,24 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
       </h1>
       <Form {...form}>
         <form
-          // @ts-ignore
           onSubmit={form.handleSubmit(onSubmit)}
           className="mx-auto mt-5 w-full space-y-6 md:w-6/12"
         >
+          {/* PREVIOUS PASSWORD */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Previous Password</FormLabel>
+                <FormControl>
+                  <Input {...field}/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* PREVIOUS PASSWORD */}
           <FormField
             control={form.control}
@@ -175,7 +187,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
               <FormItem>
                 <FormLabel>Previous Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" />
+                  <Input {...field} type="password"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -203,7 +215,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Previous Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input {...field} type="password" />
                 </FormControl>
@@ -221,7 +233,6 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
                 )} */}
             <Button
               type="submit"
-              // disabled={disabled}
               variant="outline"
               className="flex relative items-center justify-center"
             >

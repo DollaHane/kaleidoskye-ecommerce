@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth/auth-options"
+import { users } from "@/server/db/schema"
 
 import { assetType, buildingType, taskType } from "@/types/db"
 
@@ -15,6 +16,15 @@ export default async function AssetsPage() {
   if (!session) {
     redirect('/signin')
   }
+
+  const user = await db
+    .select({ firstSignin: users.firstSignin })
+    .from(users)
+    .where(eq(users.emailVerified, session.user.email!))
+    
+    if (user[0].firstSignin === true) {
+      redirect("/password-update")
+    }
 
   const data = await db
     .select({

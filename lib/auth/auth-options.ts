@@ -5,6 +5,8 @@ import { eq } from "drizzle-orm"
 import { getServerSession, type NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
+import { siteConfig } from "@/config/site"
+
 import { DrizzleAdapter } from "./drizzle-adapter"
 
 export const authOptions: NextAuthOptions = {
@@ -18,6 +20,7 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
+      // @ts-ignore
       async authorize(credentials) {
         if (!credentials) return null
         const { email, password } = credentials
@@ -25,7 +28,16 @@ export const authOptions: NextAuthOptions = {
           .select()
           .from(users)
           .where(eq(users.emailVerified, email))
-        if (user && bcrypt.compareSync(password, user[0].password)) {
+
+        if (
+          user &&
+          user[0].firstSignin === true &&
+          user[0].password === siteConfig.defaultUserPassword
+        ) {
+          if (password === siteConfig.defaultUserPassword) {
+            return { id: user[0].id, name: user[0].name, email: user[0].email }
+          }
+        } else if (user && bcrypt.compareSync(password, user[0].password)) {
           return { id: user[0].id, name: user[0].name, email: user[0].email }
         } else {
           throw new Error("Invalid credentials")

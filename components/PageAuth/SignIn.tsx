@@ -41,13 +41,14 @@ export default function SignIn() {
     },
   })
 
-  const { mutate: signIn } = useMutation({
+  const { mutate: submitMutation } = useMutation({
     mutationFn: async ({ email, password }: SignInCreationRequest) => {
       const payload: SignInCreationRequest = { email, password }
       await axios.post("/api/auth/signin", payload)
-      await signIn({
+      await signIn("credentials", {
         email: email,
         password: password,
+        redirect: true,
       })
     },
     onMutate: () => {
@@ -115,7 +116,7 @@ export default function SignIn() {
       email: values.email,
       password: values.password,
     }
-    signIn(payload)
+    submitMutation(payload)
     form.reset()
     setSubmitted(true)
   }

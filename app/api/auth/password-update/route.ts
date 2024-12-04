@@ -6,6 +6,7 @@ import { Ratelimit } from "@upstash/ratelimit"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import { z } from "zod"
+import { siteConfig } from "@/config/site"
 import { userType } from "@/types/db"
 import { getAuthSession } from "@/lib/auth/auth-options"
 import { validateUpdatePassword } from "@/lib/validators/authValidation"
@@ -39,14 +40,17 @@ export async function POST(req: Request) {
     if (!limitReached) {
       return new Response("API request limit reached", { status: 429 })
     } else {
+      if (newPassword === siteConfig.defaultUserPassword) {
+        return new Response("Supplied password was incorrect.", { status: 402 })
+      }
+
       const user: userType[] = await db
         .select()
         .from(users)
         .where(eq(users.email, email))
-      
 
       if (
-        user[0].password === "changeme" ||
+        user[0].password !== siteConfig.defaultUserPassword ||
         bcrypt.compareSync(previousPassword, user[0].password!)
       ) {
         const hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -65,7 +69,9 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Could not change password at this time. ERROR:", error)
     if (error instanceof z.ZodError) {
-      return new Response(`Zod validation error: ${error.message}`, { status: 400 })
+      return new Response(`Zod validation error: ${error.message}`, {
+        status: 400,
+      })
     }
     return new Response(
       "Could not change password at this time. Please try again later",

@@ -13,6 +13,7 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { Status } from "@/types/status"
+import { siteConfig } from "@/config/site"
 
 // *** AUTH ***
 export const sessions = pgTable("sessions", {
@@ -83,7 +84,9 @@ export const users = pgTable("users", {
   name: varchar("name", { length: 255 }).notNull().unique("user_name"),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: varchar("emailVerified", { length: 255 }),
-  password: varchar("password", { length: 255 }).notNull().default("changeme"),
+  password: varchar("password", { length: 255 })
+    .notNull()
+    .default(siteConfig.defaultUserPassword),
   resetPasswordToken: varchar("resetPasswordToken", { length: 255 }),
   resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry").default(
     sql`CURRENT_TIMESTAMP`
@@ -122,11 +125,7 @@ export const assets = pgTable("assets", {
   status: varchar("status", { length: 255 }).default(Status.GREEN).notNull(),
 })
 
-
-
-
 // *** RELATIONS ***
 export const buildingRelations = relations(buildings, ({ many }) => ({
   assets: many(assets),
 }))
-

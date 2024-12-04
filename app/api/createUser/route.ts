@@ -7,7 +7,7 @@ import { render } from "@react-email/components"
 import { eq } from "drizzle-orm"
 import { ulid } from "ulid"
 import { z } from "zod"
-
+import { siteConfig } from "@/config/site"
 import { getAuthSession } from "@/lib/auth/auth-options"
 import { createUserValidation } from "@/lib/validators/createUserValidation"
 import { VerifyEmailTemplate } from "@/components/EmailTemplates/VerifyEmailTemplate"
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       admin: admin,
       name: name,
       email: email,
-      password: "changeme",
+      password: siteConfig.defaultUserPassword,
       createdAt: createdAt,
       updatedAt: createdAt,
     })

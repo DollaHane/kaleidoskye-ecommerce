@@ -77,7 +77,7 @@ export const siteConfig = {
 }
 ```
 
-Push the pre-generated schema to your Neon database and create your first user with a password of "changeme" (after logging in you will be directed to update your password).
+Push the pre-generated schema to your Neon database and create your first user with a password of "Changeme2024!" (after logging in you will be directed to update your password).
 
 ```bash
   npm run db:push

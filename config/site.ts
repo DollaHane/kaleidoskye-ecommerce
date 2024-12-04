@@ -8,6 +8,7 @@ export const siteConfig = {
   domain: "https://www.acme.com",
   domainShort: "ACME.com",
   supportEmail: "support@acme.com",
+  defaultUserPassword: "Changeme2024!",
   mainNav: [
     {
       title: "Home",
