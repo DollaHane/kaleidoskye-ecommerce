@@ -5,15 +5,16 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
-  VisibilityState,
   useReactTable,
 } from "@tanstack/react-table"
 
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -28,9 +29,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import { Input } from "@/components/ui/input"
+} from "../ui/DropdownMenu"
 import { Button } from "../ui/button"
 
 interface DataTableProps<TData, TValue> {
@@ -42,7 +41,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -66,16 +64,18 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-        <div className="flex items-center py-4 gap-2">
-          <Input
-            placeholder="Filter Location..."
-            value={(table.getColumn("location")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("location")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <DropdownMenu>
+      <div className="flex items-center py-4 gap-2">
+        <Input
+          placeholder="Filter Location..."
+          value={
+            (table.getColumn("location")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("location")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns
@@ -84,9 +84,7 @@ export function DataTable<TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -103,7 +101,7 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        </div>
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
