@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { BookOpen, Home, PieChart } from "lucide-react"
+import { BookOpen, Cog, Home, PieChart } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
 
@@ -50,10 +50,19 @@ export function UserAccountNav({ user, adminId }: UserAccountNavProps) {
           </div>
         </div>
 
+        <DropdownMenuSeparator />
+
         <div className="flex flex-col space-y-1">
           {adminId === userId && (
-            <DropdownMenuItem asChild className=" font-bold text-customAccent">
-              <Link href="/admin-dash">Admin Dashboard</Link>
+            <DropdownMenuItem asChild>
+              <div>
+                <div className="relative flex h-8 w-8 items-center justify-center">
+                  <Cog className="absolute h-6 w-6" />
+                </div>
+                <Link href="/admin-dash" className="pl-2">
+                  Admin
+                </Link>
+              </div>
             </DropdownMenuItem>
           )}
 
