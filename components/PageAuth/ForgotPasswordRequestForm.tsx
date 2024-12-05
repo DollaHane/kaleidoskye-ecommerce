@@ -50,7 +50,6 @@ export default function ForgotPasswordRequestForm() {
   const { mutate: resetPassword } = useMutation({
     // PAYLOAD
     mutationFn: async ({ email }: ForgotPasswordRequestCreationRequest) => {
-      setIsSubmitting(true)
       const payload: ForgotPasswordRequestCreationRequest = {
         email,
       }
@@ -108,7 +107,7 @@ export default function ForgotPasswordRequestForm() {
     }
     resetPassword(payload)
     form.reset()
-    setSubmitted(true)
+    setIsSubmitting(true)
   }
 
   return (

@@ -37,10 +37,8 @@ interface UpdatePasswordFormProps {
 export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   const { data: session } = useSession()
   const router = useRouter()
-  const [submitted, setSubmitted] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [disabled, setDisabled] = useState<boolean>(true)
-  const [input, setInput] = useState<string>("")
   // const captchaKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY!
   // const [captchaValue, setCaptchaValue] = useState<string>("")
 
@@ -69,7 +67,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
       return post
     },
     onError: (error: AxiosError) => {
-      setSubmitted(false)
+      setIsSubmitting(false)
       if (error.response?.status === 400) {
         return toast({
           title: "Data Validation Error.",
@@ -109,6 +107,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
       }
     },
     onSuccess: () => {
+      setIsSubmitting(false)
       form.reset()
       if (session) {
         signOut({
@@ -132,6 +131,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
         newPassword: value.newPassword,
         confirmPassword: value.confirmPassword,
       }
+      setIsSubmitting(true)
       handleMutation(payload)
       console.log("Submit Payload:", payload)
     } else {

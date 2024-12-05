@@ -1,5 +1,6 @@
 import { headers } from "next/headers"
 import { db } from "@/server/db"
+import { ulid } from "ulid"
 import { redis } from "@/server/upstash"
 import { Ratelimit } from "@upstash/ratelimit"
 import { eq } from "drizzle-orm"
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
     const body = await req.json()
     // { x, x } = validator.parse(body)
 
+    const id = `id-${ulid()}`
     const currentDate = new Date()
 
     if (!limitReached) {
