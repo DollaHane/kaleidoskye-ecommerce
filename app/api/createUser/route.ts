@@ -57,7 +57,7 @@ export async function POST(req: Request) {
     Nodemail({
       recipient: email,
       sender: process.env.MAIL!,
-      subject: "Rhenus Asset Manager: Verification Email",
+      subject: `${siteConfig.name}: Verification Email`,
       template: template,
     })
 
