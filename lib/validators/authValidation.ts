@@ -32,16 +32,15 @@ export const validateSignIn = z.object({
 })
 
 export const validateUpdatePassword = z.object({
-  email: validateEmail,
   previousPassword: validatePassword,
   newPassword: validatePassword,
-  confirmPassword: validatePassword
+  confirmPassword: validatePassword,
 })
 
 export const validateForgotPassword = z.object({
   email: validateEmail,
   newPassword: validatePassword,
-  confirmPassword: validatePassword
+  confirmPassword: validatePassword,
 })
 
 export const validateForgotPasswordRequest = z.object({
@@ -53,8 +52,12 @@ export const validateVerifyEmail = z.object({
 })
 
 export type SignInCreationRequest = z.infer<typeof validateSignIn>
-export type UpdatePasswordCreationRequest = z.infer<typeof validateUpdatePassword>
-export type ForgotPasswordCreationRequest = z.infer<typeof validateForgotPassword>
+export type UpdatePasswordCreationRequest = z.infer<
+  typeof validateUpdatePassword
+>
+export type ForgotPasswordCreationRequest = z.infer<
+  typeof validateForgotPassword
+>
 export type ForgotPasswordRequestCreationRequest = z.infer<
   typeof validateForgotPasswordRequest
 >

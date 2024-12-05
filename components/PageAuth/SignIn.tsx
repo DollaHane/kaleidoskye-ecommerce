@@ -54,7 +54,7 @@ export default function SignIn() {
     onMutate: () => {
       return toast({
         title: "Form Submitted.",
-        description: "Busy processing request.",
+        description: "Processing request.",
       })
     },
     onError: (error: AxiosError) => {

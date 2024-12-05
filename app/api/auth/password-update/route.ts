@@ -6,8 +6,9 @@ import { Ratelimit } from "@upstash/ratelimit"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import { z } from "zod"
-import { siteConfig } from "@/config/site"
+
 import { userType } from "@/types/db"
+import { siteConfig } from "@/config/site"
 import { getAuthSession } from "@/lib/auth/auth-options"
 import { validateUpdatePassword } from "@/lib/validators/authValidation"
 
@@ -29,13 +30,12 @@ export async function POST(req: Request) {
 
     const session = await getAuthSession()
 
-    if (!session?.user) {
+    if (!session?.user.email) {
       return new Response("Unauthorised", { status: 401 })
     }
 
     const body = await req.json()
-    const { email, newPassword, previousPassword } =
-      validateUpdatePassword.parse(body)
+    const { newPassword, previousPassword } = validateUpdatePassword.parse(body)
 
     if (!limitReached) {
       return new Response("API request limit reached", { status: 429 })
@@ -47,23 +47,49 @@ export async function POST(req: Request) {
       const user: userType[] = await db
         .select()
         .from(users)
-        .where(eq(users.email, email))
+        .where(eq(users.email, session.user.email))
 
-      if (
-        user[0].password !== siteConfig.defaultUserPassword ||
-        bcrypt.compareSync(previousPassword, user[0].password!)
-      ) {
-        const hashedPassword = await bcrypt.hash(newPassword, 10)
-        const post = await db
-          .update(users)
-          .set({
-            password: hashedPassword,
+      const check = bcrypt.compareSync(previousPassword, user[0].password!)
+      console.log(
+        "password check:",
+        user[0].password,
+        siteConfig.defaultUserPassword,
+        check
+      )
+
+      if (user[0].firstSignin === true) {
+        if (user[0].password === siteConfig.defaultUserPassword) {
+          const hashedPassword = await bcrypt.hash(newPassword, 10)
+          const post = await db
+            .update(users)
+            .set({
+              password: hashedPassword,
+              firstSignin: false,
+            })
+            .where(eq(users.email, session.user.email))
+          return new Response(JSON.stringify(post), { status: 200 })
+        } else {
+          return new Response("Supplied password was incorrect.", {
+            status: 402,
           })
-          .where(eq(users.email, email))
-
-        return new Response(JSON.stringify(post), { status: 200 })
+        }
       } else {
-        return new Response("Supplied password was incorrect.", { status: 402 })
+        if (user[0].firstSignin === false) {
+          if (bcrypt.compareSync(previousPassword, user[0].password!)) {
+            const hashedPassword = await bcrypt.hash(newPassword, 10)
+            const post = await db
+              .update(users)
+              .set({
+                password: hashedPassword,
+              })
+              .where(eq(users.email, session.user.email))
+            return new Response(JSON.stringify(post), { status: 200 })
+          } else {
+            return new Response("Supplied password was incorrect.", {
+              status: 402,
+            })
+          }
+        }
       }
     }
   } catch (error) {

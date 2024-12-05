@@ -40,14 +40,13 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   const [submitted, setSubmitted] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [disabled, setDisabled] = useState<boolean>(true)
-  const [input, setInput] = useState<string>('')
+  const [input, setInput] = useState<string>("")
   // const captchaKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY!
   // const [captchaValue, setCaptchaValue] = useState<string>("")
 
   const form = useForm({
     resolver: zodResolver(validateUpdatePassword),
     defaultValues: {
-      email: session?.user.email,
       previousPassword: "",
       newPassword: "",
       confirmPassword: "",
@@ -57,13 +56,11 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   const { mutate: handleMutation } = useMutation({
     // PAYLOAD
     mutationFn: async ({
-      email,
       newPassword,
       previousPassword,
       confirmPassword,
     }: UpdatePasswordCreationRequest) => {
       const payload: UpdatePasswordCreationRequest = {
-        email,
         previousPassword,
         newPassword,
         confirmPassword,
@@ -128,23 +125,22 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
   })
 
   function onSubmit(value: z.infer<typeof validateUpdatePassword>) {
-    console.log('value', value)
-    // if (value.newPassword === value.confirmPassword) {
-    //   const payload: UpdatePasswordCreationRequest = {
-    //     email: session?.user.email!,
-    //     previousPassword: value.previousPassword,
-    //     newPassword: value.newPassword,
-    //     confirmPassword: value.confirmPassword,
-    //   }
-    //   handleMutation(payload)
-    //   console.log("Submit Payload:", payload)
-    // } else {
-    //   return toast({
-    //     title: "Password miss match!",
-    //     description:
-    //       "The passwords supplied do not match, please re-enter your password",
-    //   })
-    // }
+    console.log("value", value)
+    if (value.newPassword === value.confirmPassword) {
+      const payload: UpdatePasswordCreationRequest = {
+        previousPassword: value.previousPassword,
+        newPassword: value.newPassword,
+        confirmPassword: value.confirmPassword,
+      }
+      handleMutation(payload)
+      console.log("Submit Payload:", payload)
+    } else {
+      return toast({
+        title: "Password miss match!",
+        description:
+          "The passwords supplied do not match, please re-enter your password",
+      })
+    }
   }
 
   // useEffect(() => {
@@ -167,27 +163,12 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
           {/* PREVIOUS PASSWORD */}
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Previous Password</FormLabel>
-                <FormControl>
-                  <Input {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* PREVIOUS PASSWORD */}
-          <FormField
-            control={form.control}
             name="previousPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Previous Password</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password"/>
+                  <Input {...field} type="password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
