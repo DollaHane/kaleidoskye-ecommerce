@@ -2,8 +2,7 @@
 
 The Build Software starter template. 
 
-This template was created to kickstart internal business management projects where the auth 
-is configured for a closed system for internal use.
+A template for kickstarting internal business management projects, the auth is configured as a closed system for internal use.
 
 ![Project Image](https://github.com/DollaHane/Build-Software-NEXTJS-Template-One/blob/main/components/Assets/Thumbnail.png)
 
