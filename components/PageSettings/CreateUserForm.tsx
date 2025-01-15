@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { siteConfig } from "@/config/site"
 
 export default function CreateUserForm() {
   const [admin, setAdmin] = useState<boolean>(false)
@@ -137,7 +138,7 @@ export default function CreateUserForm() {
                     <Input {...field} />
                   </FormControl>
                   <FormDescription>
-                    Must be a valid Rhenus employee email address.
+                    Must be a valid {siteConfig.businessName} employee email address.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
