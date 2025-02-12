@@ -4,7 +4,7 @@ The Build Software starter template.
 
 A template for kickstarting internal business management projects, the auth is configured as a closed system for internal use.
 
-![Project Image](https://github.com/DollaHane/Build-Software-NEXTJS-Template-One/blob/main/components/Assets/Thumbnail.png)
+![Project Image](https://github.com/DollaHane/build-software-template/blob/main/components/Assets/Thumbnail.png)
 
 ## Features
 
