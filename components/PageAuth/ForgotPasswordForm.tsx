@@ -30,10 +30,6 @@ import { Input } from "../ui/input"
 
 // import ReCAPTCHA from "react-google-recaptcha"
 
-interface ForgotPasswordFormProps {
-  user: userType[]
-}
-
 export default function ForgotPasswordForm() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)

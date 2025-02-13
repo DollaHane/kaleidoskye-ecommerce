@@ -6,13 +6,14 @@ import { eq } from "drizzle-orm"
 import { userType } from "@/types/db"
 
 interface ResetPasswordProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export default async function ResetPassword({
   searchParams,
 }: ResetPasswordProps) {
-  const { token } = searchParams
+  const params = await searchParams;
+  const { token } = params;
 
   const user: userType[] = await db
     .select()

@@ -3,17 +3,17 @@ import { db } from "@/server/db"
 import { eq } from "drizzle-orm"
 import { users } from "@/server/db/schema"
 import { userType } from "@/types/db"
-import UpdatePasswordForm from "@/components/PageAuth/UpdatePasswordForm"
 import ForgotPasswordForm from "@/components/PageAuth/ForgotPasswordForm"
 
 interface ResetPasswordProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export default async function ResetPassword({
   searchParams,
 }: ResetPasswordProps) {
-  const { token } = searchParams
+  const params = await searchParams;
+  const { token } = params;
 
   const user: userType[] = await db
     .select()
@@ -26,7 +26,7 @@ export default async function ResetPassword({
       <div className="z-20 mx-auto mb-52 min-h-screen w-11/12 min-w-[280px] overflow-hidden md:w-8/12">
         <h1 className="mt-10 text-xl font-bold text-primary">Reset Password</h1>
         <hr className="my-2 border border-t-muted-foreground" />
-        <ForgotPasswordForm user={user} />
+        <ForgotPasswordForm/>
       </div>
     )
   } else {

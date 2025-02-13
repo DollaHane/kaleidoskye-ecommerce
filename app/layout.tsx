@@ -1,20 +1,12 @@
 import "@/styles/globals.css"
 import { Metadata, type Viewport } from "next"
-import { redirect } from "next/navigation"
-import { db } from "@/server/db"
-import { users } from "@/server/db/schema"
-import { eq } from "drizzle-orm"
-import { getServerSession } from "next-auth"
-
 import { siteConfig } from "@/config/site"
-import { authOptions, getAuthSession } from "@/lib/auth/auth-options"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import Footer from "@/components/Footer"
 import Providers from "@/components/Global/Providers"
 import NavBar from "@/components/NavBar/NavBar"
-import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -34,7 +26,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     // shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    // apple: "/apple-touch-icon.png",
   },
 }
 
@@ -56,6 +48,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <Providers>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <div className="relative flex min-h-screen flex-col">
+                {/* @ts-expect-error Server Component */}
                 <NavBar />
                 <Footer />
                 <div className="flex-1">{children}</div>
