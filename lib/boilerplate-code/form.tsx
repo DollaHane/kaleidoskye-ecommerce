@@ -84,13 +84,6 @@ export default function FormComponent({ prop }: FormComponentProps) {
           variant: "destructive",
         })
       }
-      if (error.response?.status === 402) {
-        return toast({
-          title: "Authentication Error.",
-          description: "Incorrect password.",
-          variant: "destructive",
-        })
-      }
       if (error.response?.status === 429) {
         return toast({
           title: "Too Many Requests.",

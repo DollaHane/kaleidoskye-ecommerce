@@ -1,4 +1,5 @@
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
 import {
   HydrationBoundary,
@@ -8,46 +9,51 @@ import {
 import { User } from "lucide-react"
 import { getServerSession } from "next-auth"
 
-import { userType } from "@/types/db"
-import { siteConfig } from "@/config/site"
 import { authOptions } from "@/lib/auth/auth-options"
+import Logo from "@/components/Assets/Logo.png"
 
+import { ThemeToggle } from "../theme-toggle"
 import { Button } from "../ui/button"
-import { AccountNav } from "./AccountNav"
-import { MainNav } from "./MainNav"
+import CartNavigation from "./CartNavigation"
+import LinkNavigation from "./LinkNavigation"
+import Menu from "./Menu"
 
 export default async function NavBar() {
   const session = await getServerSession(authOptions)
-
   const queryClient = new QueryClient()
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["notify"],
-  //   queryFn: getNotifications,
-  // })
-
   return (
-    <header className="sticky top-0 z-50 flex w-full flex-col items-center justify-center bg-muted/60 px-5 backdrop-blur-xl">
-      <div className="relative flex  h-[140px] w-full max-w-[75vw] items-center justify-between space-x-4 sm:h-20 sm:space-x-0">
-        <div className="absolute top-5 flex w-full flex-col gap-3 sm:flex-row sm:gap-5 sm:pr-56">
-          <MainNav items={siteConfig.mainNav} />
+    <header className="sticky top-0 z-50 flex flex-col items-center justify-center bg-accent shadow-md backdrop-blur-md">
+      <div className="container relative h-20 flex w-11/12 items-center justify-between px-8">
+        {/* LEFT */}
+        <div className="z-50">
+          <Menu />
         </div>
 
-        {/* SIGN IN */}
+        {/* CENTER */}
+        <div className="absolute top-0 left-0 flex w-full items-center justify-center z-40">
+          <Image
+            src={Logo}
+            alt="kaleidoskye-party-cannons"
+            className=" w-36 hidden sm:block"
+          />
+        </div>
+
+        {/* RIGHT */}
         {session?.user ? (
-          <div>
+          <div className="flex gap-8 z-50">
             <HydrationBoundary state={dehydrate(queryClient)}>
-              {/* @ts-expect-error Server Component */}
-              <AccountNav />
+              <LinkNavigation href="/account" label="Account" />
+              <CartNavigation href="/cart" label="Cart" />
             </HydrationBoundary>
           </div>
         ) : (
           <Button
             variant="icon"
-            className="absolute right-0 top-7 h-10 w-10 rounded-full border-2 border-transparent bg-background text-primary shadow-lg hover:text-customAccent"
+            className="flex h-10 w-10 rounded-full border border-transparent text-primary hover:text-customAccent z-50"
           >
             <Link href="/signin" className="w-auto">
-              <User className="h-6 w-6" />
+              Signin
             </Link>
           </Button>
         )}

@@ -8,6 +8,7 @@ import { Loader } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { siteConfig } from "@/config/site"
 import {
   CreateUserValidationRequest,
   createUserValidation,
@@ -25,7 +26,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { siteConfig } from "@/config/site"
 
 export default function CreateUserForm() {
   const [admin, setAdmin] = useState<boolean>(false)
@@ -71,6 +71,13 @@ export default function CreateUserForm() {
           title: "Data Validation Error.",
           description:
             "There was an error processing the data provided. Please try again.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 429) {
+        return toast({
+          title: "Too Many Requests.",
+          description: "Please wait 30sec before trying again.",
           variant: "destructive",
         })
       }
@@ -138,7 +145,8 @@ export default function CreateUserForm() {
                     <Input {...field} />
                   </FormControl>
                   <FormDescription>
-                    Must be a valid {siteConfig.businessName} employee email address.
+                    Must be a valid {siteConfig.businessName} employee email
+                    address.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

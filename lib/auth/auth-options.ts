@@ -3,6 +3,7 @@ import { users } from "@/server/db/schema"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import { getServerSession, type NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 import { siteConfig } from "@/config/site"
@@ -15,6 +16,10 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
     CredentialsProvider({
       credentials: {
         email: {},
@@ -31,7 +36,6 @@ export const authOptions: NextAuthOptions = {
 
         if (
           user &&
-          user[0].firstSignin === true &&
           user[0].password === siteConfig.defaultUserPassword
         ) {
           if (password === siteConfig.defaultUserPassword) {

@@ -4,6 +4,9 @@ import {
   boolean,
   index,
   integer,
+  json,
+  numeric,
+  pgEnum,
   pgTable,
   pgTableCreator,
   text,
@@ -12,8 +15,17 @@ import {
   varchar,
 } from "drizzle-orm/pg-core"
 
-import { Status } from "@/types/status"
 import { siteConfig } from "@/config/site"
+import {
+  zodCannonEnum,
+  zodConfettiColourEnum,
+  zodPowderColourEnum,
+} from "@/lib/validators/addToCartValidation"
+import {
+  zodOrderStatusEnum,
+  zodPaymentStatus,
+} from "@/lib/validators/orderValidation"
+import { number } from "zod"
 
 // *** AUTH ***
 export const sessions = pgTable("sessions", {
@@ -79,9 +91,12 @@ export const verificationTokens = pgTable("verification_tokens", {
 // *** TABLES ***
 export const users = pgTable("users", {
   id: varchar("id", { length: 255 }).primaryKey().notNull().unique("user_id"),
-  admin: boolean("admin").default(false).notNull(),
-  firstSignin: boolean("firstSignin").default(true).notNull(),
   name: varchar("name", { length: 255 }).notNull().unique("user_name"),
+  phone: integer(),
+  shippingAddress: json(),
+  billingAddress: json(),
+  firstname: varchar("firstname", { length: 255 }),
+  lastname: varchar("lastname", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: varchar("emailVerified", { length: 255 }),
   password: varchar("password", { length: 255 })
@@ -100,32 +115,54 @@ export const users = pgTable("users", {
     .notNull(),
 })
 
-export const buildings = pgTable("building", {
+export const cannonEnum = pgEnum("cannonSize", zodCannonEnum)
+export const powderEnum = pgEnum("powderColours", zodPowderColourEnum)
+export const confettiEnum = pgEnum("confettiColours", zodConfettiColourEnum)
+
+export const cartItem = pgTable("cartItem", {
   id: varchar("id", { length: 255 })
     .primaryKey()
     .notNull()
-    .unique("building_id"),
-  name: varchar("name", { length: 255 }).notNull().unique(),
+    .unique("cartItem_id"),
+  userId: varchar("userId", { length: 255 })
+    .references(() => users.id)
+    .notNull(),
+  cannonSize: cannonEnum().notNull(),
+  powderColours: powderEnum(),
+  confettiColours: confettiEnum(),
+  noPowder: boolean().default(false),
+  noConfetti: boolean().default(false),
+  quantity: numeric().notNull(),
+  totalPrice: numeric().notNull(),
+  cannonPrice: numeric().notNull(),
+  powderPrice: numeric().notNull(),
+  confettiPrice: numeric().notNull(),
+  createdAt: timestamp("createdAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 })
 
-export const assets = pgTable("assets", {
-  id: varchar("id", { length: 255 }).primaryKey().notNull().unique("asset_id"),
-  assetNo: varchar("assetNo", { length: 255 }),
-  mfgYr: varchar("mfgYr", { length: 255 }),
-  make: varchar("make", { length: 255 }),
-  model: varchar("model", { length: 255 }),
-  sn: varchar("sn", { length: 255 }),
-  description: varchar("description", { length: 255 }),
-  location: varchar("location", { length: 255 }).references(
-    () => buildings.name
-  ),
-  inspectionFreq: varchar("inspectionFreq", { length: 255 }),
-  serviceProvider: varchar("serviceProvider", { length: 255 }),
-  nextService: timestamp("nextService"),
-  status: varchar("status", { length: 255 }).default(Status.GREEN).notNull(),
-})
+export const orderStatusEnum = pgEnum("orderStatus", zodOrderStatusEnum)
+export const paymentStatusEnum = pgEnum("paymentStatus", zodPaymentStatus)
 
-// *** RELATIONS ***
-export const buildingRelations = relations(buildings, ({ many }) => ({
-  assets: many(assets),
-}))
+export const orders = pgTable("orders", {
+  id: varchar("id", { length: 255 }).primaryKey().notNull().unique("order_id"),
+  userId: varchar("userId", { length: 255 })
+    .references(() => users.id)
+    .notNull(),
+  email: varchar("email", { length: 255 })
+    .notNull()
+    .references(() => users.email),
+  orderDetails: json().notNull(),
+  totalPrice: numeric().notNull(),
+  shippingAddress: json()
+    .notNull()
+    .references(() => users.shippingAddress),
+  billingAddress: json().notNull(),
+  orderStatus: orderStatusEnum(),
+  paymentStatus: paymentStatusEnum().notNull(),
+  createdAt: timestamp()
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp().default(sql`CURRENT_TIMESTAMP`),
+})

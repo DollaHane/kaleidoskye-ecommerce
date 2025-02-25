@@ -1,16 +1,18 @@
 {
   "console.log": {
     "prefix": "cl",
-    "body": ["console.log('${1}', ${2})"],
+    "body": [
+      "console.log('${1}', ${2})"
+    ],
     "description": "console.log template"
   },
-
   "useState": {
     "prefix": "usr",
-    "body": ["const [${1}, set${2}] = useState<${3}>()"],
+    "body": [
+      "const [${1}, set${2}] = useState<${3}>()"
+    ],
     "description": "React useState template"
   },
-
   "useMutation": {
     "prefix": "usm",
     "body": [
@@ -19,6 +21,29 @@
       "    await axios.get('/api/pathName', propId)",
       "  },",
       "  onError: (error: AxiosError) => {",
+      "    setIsSubmitting(false)",
+      "    if (error.response?.status === 400) {",
+      "      return toast({",
+      "        title: 'Data Validation Error.',",
+      "        description:",
+      "          'There was an error processing the data provided. Please try again.',",
+      "        variant: 'destructive',",
+      "      })",
+      "    }",
+      "    if (error.response?.status === 401) {",
+      "      return toast({",
+      "        title: 'Authorisation Error.',",
+      "        description: 'Operation was not authorised, please login.',",
+      "        variant: 'destructive',",
+      "      })",
+      "    }",
+      "    if (error.response?.status === 429) {",
+      "      return toast({",
+      "        title: 'Too Many Requests.',",
+      "        description: 'Please wait 30sec before trying again.',",
+      "        variant: 'destructive',",
+      "      })",
+      "    }",
       "    if (error.response?.status === 500) {",
       "      return toast({",
       "        title: 'Server Error.',",
@@ -26,13 +51,15 @@
       "          'Failed to complete operation due to a server error. Please try again.',",
       "        variant: 'destructive',",
       "      })",
-      "}",
-      "  },  onSuccess: () => {",
+      "    }",
+      "  },",
+      "  onSuccess: () => {",
       "    return toast({",
       "      title: 'Success!',",
       "      description: 'Success message.',",
       "    })",
-      "  },  onSettled: async (_, error) => {",
+      "  },",
+      "  onSettled: async (_, error) => {",
       "    if (error) {",
       "      console.log('onSettled error:', error)",
       "    } else {",
@@ -43,7 +70,6 @@
     ],
     "description": "TanStack useMutation template"
   },
-
   "BUILD Form Component": {
     "prefix": "bldform",
     "body": [
@@ -110,16 +136,32 @@
       "      setIsSubmitting(false)",
       "      if (error.response?.status === 400) {",
       "        return toast({",
-      "          title: \"Data Validation Error.\",",
-      "          description: \"There was an error processing the data provided. Please try again.\",",
-      "          variant: \"destructive\"",
+      "          title: 'Data Validation Error.',",
+      "          description:",
+      "            'There was an error processing the data provided. Please try again.',",
+      "          variant: 'destructive',",
+      "        })",
+      "      }",
+      "      if (error.response?.status === 401) {",
+      "        return toast({",
+      "          title: 'Authorisation Error.',",
+      "          description: 'Operation was not authorised, please login.',",
+      "          variant: 'destructive',",
+      "        })",
+      "      }",
+      "      if (error.response?.status === 429) {",
+      "        return toast({",
+      "          title: 'Too Many Requests.',",
+      "          description: 'Please wait 30sec before trying again.',",
+      "          variant: 'destructive',",
       "        })",
       "      }",
       "      if (error.response?.status === 500) {",
       "        return toast({",
-      "          title: \"Server Error.\",",
-      "          description: \"Failed to complete operation due to a server error. Please try again.\",",
-      "          variant: \"destructive\"",
+      "          title: 'Server Error.',",
+      "          description:",
+      "            'Failed to complete operation due to a server error. Please try again.',",
+      "          variant: 'destructive',",
       "        })",
       "      }",
       "    },",
@@ -193,7 +235,6 @@
     ],
     "description": "Full form component with validation and mutation in Next.js"
   },
-
   "BUILD Post Handler": {
     "prefix": "bldpost",
     "body": [
@@ -230,7 +271,7 @@
       "    console.log(\"Rate Limit Stats:\", remaining, limit, limitReached)",
       "",
       "    const body = await req.json()",
-      "    // { x, x } = validator.parse(body)",
+      "    // const { x, x } = validator.parse(body)",
       "",
       "    const id = `id-${ulid()}`",
       "    const currentDate = new Date()",
@@ -240,7 +281,7 @@
       "    } else {",
       "      const transaction = null",
       "",
-      "      return new Response(JSON.stringify(\"Successfully *** :\", transaction), {",
+      "      return new Response(`Successfully *** : ${transaction}`, {",
       "        status: 200,",
       "      })",
       "    }",
@@ -259,7 +300,6 @@
     ],
     "description": "Next.js API POST handler with rate limiting and error handling"
   },
-
   "BUILD Action Template": {
     "prefix": "bldact",
     "body": [
@@ -290,7 +330,6 @@
     ],
     "description": "Next.js GET handler template with session validation"
   },
-
   "BUILD Service Template": {
     "prefix": "bldserv",
     "body": [

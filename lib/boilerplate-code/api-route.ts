@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     console.log("Rate Limit Stats:", remaining, limit, limitReached)
 
     const body = await req.json()
-    // { x, x } = validator.parse(body)
+    // const { x, x } = validator.parse(body)
 
     const id = `id-${ulid()}`
     const currentDate = new Date()
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     } else {
       const transaction = null
 
-      return new Response(JSON.stringify("Successfully *** :", transaction), {
+      return new Response(`Successfully *** : ${transaction}`, {
         status: 200,
       })
     }

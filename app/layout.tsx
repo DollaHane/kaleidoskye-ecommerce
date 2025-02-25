@@ -9,6 +9,7 @@ import Providers from "@/components/Global/Providers"
 import NavBar from "@/components/NavBar/NavBar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import { FooterSection } from "@/components/Footer-Section"
 
 export const viewport: Viewport = {
   themeColor: [
@@ -25,8 +26,6 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
-    // shortcut: "/favicon-16x16.png",
-    // apple: "/apple-touch-icon.png",
   },
 }
 
@@ -46,16 +45,14 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <Providers>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <div className="relative flex min-h-screen flex-col">
                 {/* @ts-expect-error Server Component */}
                 <NavBar />
-                <Footer />
                 <div className="flex-1">{children}</div>
+                <FooterSection/>
               </div>
               <TailwindIndicator />
               <Toaster />
-            </ThemeProvider>
           </Providers>
         </body>
       </html>

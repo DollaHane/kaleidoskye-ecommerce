@@ -1,108 +1,37 @@
-# Build Studio Template
+# Kaleidoskye E-Commerce Application
 
-The Build Software starter template. 
-
-A template for kickstarting internal business management projects, the auth is configured as a closed system for internal use.
+A sleak e-commerce store implimentation for Kaleidoskye who are passionate about colourful, eco-friendly powder cannons.
 
 ![Project Image](https://github.com/DollaHane/build-software-template/blob/main/components/Assets/Thumbnail.png)
 
 ## Features
 
 - Next.js 15 App Directory
-- Next-Auth (Credentials - Sign-in only)
+- Next-Auth (Google Credentials)
 - Shadcn Components
+- Graphics designed in Figma
 - Tailwind CSS
+- Zustand State Management
 - ZOD Validation
 - Drizzle ORM
 - NEON Database
 - TanStack Query
+- Upstash Redis Rate Limiting
 - Nodemailer
+- Payfast Payments Integration
 - React Email Templates
 - Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
 - Tailwind CSS class sorting, merging and linting.
-
-
-## Getting started
-
-Download the repository to a directory of your choice and run:
-
-```bash
-  npm install
-```
-
-Copy these variables into a .env file:
-
-```bash
-DATABASE_URL=
-
-NEXTAUTH_SECRET=
-NEXTAUTH_URL="http://localhost:3000"
-
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
-
-URL="http://localhost:3000"
-
-MAIL="your@domain.com"
-MAIL_USER="your@domain.com"
-MAIL_PASSWORD="password"
-```
-
-Edit the site.ts file in the config folder:
-
-```bash
-export type SiteConfig = typeof siteConfig
-
-export const siteConfig = {
-  name: "ACME Management",
-  description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
-  businessName: "ACME (Pty) Ltd",
-  domain: "https://www.acme.com",
-  domainShort: "ACME.com",
-  supportEmail: "support@acme.com",
-  mainNav: [
-    {
-      title: "Home",
-      href: "/",
-    },
-  ],
-  links: {
-    dashboard: "/",
-    assets: "/assets",
-    settings: "/settings"
-  },
-}
-```
-
-Push the pre-generated schema to your Neon database and create your first user with a password of "Changeme2024!" (after logging in you will be directed to update your password).
-
-```bash
-  npm run db:push
-```
-
-You can also add a user via Drizzle Studio. Make sure you have Drizzle Kit installed.
-
-```bash
- npm install drizzle-orm -D drizzle-kit
-```
-
-```bash
-  npx drizzle-kit studio
-```
 
 ## Documentation Links
 
+- [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction): Zustand State Management Documentation.
 - [Drizzle ORM](https://orm.drizzle.team/docs/get-started/neon-new): Get started with Drizzle and Neon.
 - [Neon DB](https://neon.tech/docs/guides/drizzle): Learn how to connect to Neon from Drizzle.
 - [Upstash Rate Limiting](https://upstash.com/blog/nextjs-ratelimiting): Redis rate limiting.
 - [Next Auth Credentials](https://next-auth.js.org/providers/credentials): Sign in with email & password.
+- [Payfast](https://developers.payfast.co.za/docs): Payfast Documentation
 - [Shadcn](https://ui.shadcn.com): UI Components
-
-## Acknowledgements
-
-- Shadcn's [NEXT Template](https://github.com/shadcn/next-template) which this repository was forked from
 
 ## License
 
