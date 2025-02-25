@@ -4,12 +4,10 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
-import Footer from "@/components/Footer"
 import Providers from "@/components/Global/Providers"
 import NavBar from "@/components/NavBar/NavBar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
-import { FooterSection } from "@/components/Footer-Section"
+import { FooterSection } from "@/components/footer-section"
 
 export const viewport: Viewport = {
   themeColor: [
