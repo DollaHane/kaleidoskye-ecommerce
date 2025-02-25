@@ -37,7 +37,7 @@ export const addToCartValidation = z.object({
   confetti: z.enum(zodConfettiColourEnum).array().optional(),
   noPowder: z.boolean(),
   noConfetti: z.boolean(),
-  quantity: z.number().min(1, {message: "Quantity must be at least 1."}),
+  quantity: z.number().min(1, { message: "Quantity must be at least 1." }),
   totalPrice: z.number().min(150).max(250),
   cannonPrice: z
     .number()
@@ -65,4 +65,6 @@ export const addToCartValidation = z.object({
     }),
 })
 
-export type AddToCartValidationCreationRequest = z.infer<typeof addToCartValidation>
+export type AddToCartValidationCreationRequest = z.infer<
+  typeof addToCartValidation
+>

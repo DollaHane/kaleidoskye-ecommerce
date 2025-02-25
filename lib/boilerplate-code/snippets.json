@@ -1,16 +1,12 @@
 {
   "console.log": {
     "prefix": "cl",
-    "body": [
-      "console.log('${1}', ${2})"
-    ],
+    "body": ["console.log('${1}', ${2})"],
     "description": "console.log template"
   },
   "useState": {
     "prefix": "usr",
-    "body": [
-      "const [${1}, set${2}] = useState<${3}>()"
-    ],
+    "body": ["const [${1}, set${2}] = useState<${3}>()"],
     "description": "React useState template"
   },
   "useMutation": {

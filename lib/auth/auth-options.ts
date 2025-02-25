@@ -3,8 +3,8 @@ import { users } from "@/server/db/schema"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import { getServerSession, type NextAuthOptions } from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 
 import { siteConfig } from "@/config/site"
 
@@ -34,10 +34,7 @@ export const authOptions: NextAuthOptions = {
           .from(users)
           .where(eq(users.emailVerified, email))
 
-        if (
-          user &&
-          user[0].password === siteConfig.defaultUserPassword
-        ) {
+        if (user && user[0].password === siteConfig.defaultUserPassword) {
           if (password === siteConfig.defaultUserPassword) {
             return { id: user[0].id, name: user[0].name, email: user[0].email }
           }

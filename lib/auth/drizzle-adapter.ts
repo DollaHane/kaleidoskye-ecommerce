@@ -1,6 +1,6 @@
-import { ulid } from "ulid"
 import { and, eq } from "drizzle-orm"
 import type { Adapter } from "next-auth/adapters"
+import { ulid } from "ulid"
 
 import {
   accounts,

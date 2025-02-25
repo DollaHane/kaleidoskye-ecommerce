@@ -3,14 +3,15 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
-import { useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios, { AxiosError } from "axios"
 import { Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+
 import { toast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -19,12 +20,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 // import ReCAPTCHA from "react-google-recaptcha"
-
 
 export const validateValue = z.object({
   value: z
@@ -52,17 +50,15 @@ export default function FormComponent({ prop }: FormComponentProps) {
   const form = useForm({
     resolver: zodResolver(validateValue),
     defaultValues: {
-      value: ""
+      value: "",
     },
   })
 
   const { mutate: handleMutation } = useMutation({
     // PAYLOAD
-    mutationFn: async ({
-      value
-    }: valueCreationRequest) => {
+    mutationFn: async ({ value }: valueCreationRequest) => {
       const payload: valueCreationRequest = {
-        value
+        value,
       }
       const post = await axios.post("/api/path-to-route", payload)
       return post
@@ -112,7 +108,7 @@ export default function FormComponent({ prop }: FormComponentProps) {
       if (error) {
         console.log("onSettled error:", error)
       } else {
-        router.push('/path')
+        router.push("/path")
         await queryClient.invalidateQueries({
           queryKey: ["key"],
         })
@@ -121,16 +117,16 @@ export default function FormComponent({ prop }: FormComponentProps) {
   })
 
   function onSubmit(value: z.infer<typeof validateValue>) {
-      const payload: valueCreationRequest = {
-        value: value.value
-      }
-      handleMutation(payload)
-      setIsSubmitting(true)
-      console.log("Submit Payload:", payload)
-      return toast({
-        title: "Form Submitted",
-        description: "Processing request.",
-      })
+    const payload: valueCreationRequest = {
+      value: value.value,
+    }
+    handleMutation(payload)
+    setIsSubmitting(true)
+    console.log("Submit Payload:", payload)
+    return toast({
+      title: "Form Submitted",
+      description: "Processing request.",
+    })
   }
 
   // useEffect(() => {
@@ -141,9 +137,7 @@ export default function FormComponent({ prop }: FormComponentProps) {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mt-10 text-center">
-        Title
-      </h1>
+      <h1 className="mt-10 text-center">Title</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -174,10 +168,10 @@ export default function FormComponent({ prop }: FormComponentProps) {
             <Button
               type="submit"
               variant="outline"
-              className="flex relative items-center justify-center"
+              className="relative flex items-center justify-center"
             >
               {isSubmitting ? (
-                <Loader2 className="h-5 w-5 absolute flex animate-spin" />
+                <Loader2 className="absolute flex h-5 w-5 animate-spin" />
               ) : (
                 "Send"
               )}
