@@ -1,7 +1,8 @@
 import Image from "next/image"
-import { User } from "@/types/user"
 import { AvatarProps } from "@radix-ui/react-avatar"
 import { UserCheck } from "lucide-react"
+
+import { User } from "@/types/user"
 
 import { Avatar, AvatarFallback } from "./Avatar"
 

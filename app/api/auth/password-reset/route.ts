@@ -6,8 +6,9 @@ import { Ratelimit } from "@upstash/ratelimit"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import { z } from "zod"
-import { validateForgotPassword } from "@/lib/validators/authValidation"
+
 import { userType } from "@/types/db"
+import { validateForgotPassword } from "@/lib/validators/authValidation"
 
 const rateLimit = new Ratelimit({
   redis,
@@ -31,17 +32,20 @@ export async function POST(req: Request) {
     if (!limitReached) {
       return new Response("API request limit reached", { status: 429 })
     } else {
-      const user: userType[] = await db.select().from(users).where(eq(users.email, email))
-      
+      const user: userType[] = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+
       const currentDate = new Date().getTime()
       const tokenExpiry = new Date(user[0].resetPasswordTokenExpiry!).getTime()
 
       const diff = tokenExpiry - currentDate
 
       if (diff <= 0) {
-        return new Response("Reset token expired", {status: 401})
+        return new Response("Reset token expired", { status: 401 })
       }
-      
+
       const hashedPassword = await bcrypt.hash(newPassword, 10)
       const post = await db
         .update(users)

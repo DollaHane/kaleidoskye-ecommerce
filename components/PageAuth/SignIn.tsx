@@ -122,7 +122,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="w-full flex p-5 justify-center">
+    <div className="flex w-full justify-center p-5">
       <div className="w-full md:w-1/2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -159,7 +159,7 @@ export default function SignIn() {
                 className="relative flex w-20"
               >
                 {submitted ? (
-                  <Loader className="flex absolute h-6 w-6 animate-spin" />
+                  <Loader className="absolute flex h-6 w-6 animate-spin" />
                 ) : (
                   <p>Login</p>
                 )}

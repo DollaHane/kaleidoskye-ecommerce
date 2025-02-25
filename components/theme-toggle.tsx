@@ -12,7 +12,7 @@ export function ThemeToggle() {
   return (
     <Button
       variant="ghost"
-      className="bg-transparent text-zinc-100 hover:text-zinc-300 hover:bg-transparent"
+      className="bg-transparent text-zinc-100 hover:bg-transparent hover:text-zinc-300"
       size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >

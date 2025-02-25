@@ -1,8 +1,8 @@
 "use client"
 
 import React, {
-  ReactNode,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useRef,
@@ -54,7 +54,7 @@ export const ModalTrigger = ({
   return (
     <button
       className={cn(
-        "rounded-xl text-primary text-center relative overflow-hidden",
+        "relative overflow-hidden rounded-xl text-center text-primary",
         className
       )}
       onClick={() => setOpen(true)}
@@ -100,14 +100,14 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
         >
           <Overlay />
 
           <motion.div
             ref={modalRef}
             className={cn(
-              "max-h-[90%] min-w-[350px] max-w-[90%] md:max-w-[80%] lg:max-w-[800px] bg-background border border-muted rounded-2xl shadow-md relative z-50 flex flex-col flex-1 overflow-hidden",
+              "relative z-50 flex max-h-[90%] min-w-[350px] max-w-[90%] flex-1 flex-col overflow-hidden rounded-2xl border border-muted bg-background shadow-md md:max-w-[80%] lg:max-w-[800px]",
               className
             )}
             initial={{
@@ -150,7 +150,7 @@ export const ModalContent = ({
   className?: string
 }) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-8 md:p-10", className)}>
+    <div className={cn("flex flex-1 flex-col p-8 md:p-10", className)}>
       {children}
     </div>
   )
@@ -164,7 +164,7 @@ export const ModalFooter = ({
   className?: string
 }) => {
   return (
-    <div className={cn("flex justify-end p-4 bg-background", className)}>
+    <div className={cn("flex justify-end bg-background p-4", className)}>
       {children}
     </div>
   )
@@ -184,7 +184,7 @@ const Overlay = ({ className }: { className?: string }) => {
         opacity: 0,
         backdropFilter: "blur(0px)",
       }}
-      className={`fixed inset-0 h-full w-full bg-background/20 bg-opacity-50 z-50 ${className}`}
+      className={`fixed inset-0 z-50 h-full w-full bg-background/20 bg-opacity-50 ${className}`}
     ></motion.div>
   )
 }
@@ -194,7 +194,7 @@ const CloseIcon = () => {
   return (
     <button
       onClick={() => setOpen(false)}
-      className="absolute top-4 right-4 group z-50"
+      className="group absolute right-4 top-4 z-50"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -206,7 +206,7 @@ const CloseIcon = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-primary h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200"
+        className="h-4 w-4 text-primary transition duration-200 group-hover:rotate-3 group-hover:scale-125"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 6l-12 12" />

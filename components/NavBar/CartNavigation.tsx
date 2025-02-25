@@ -1,8 +1,10 @@
-'use client'
+"use client"
+
 import React from "react"
 import Link from "next/link"
-import { ShoppingCart } from "lucide-react"
 import { useCartStore } from "@/store/cart-store"
+import { ShoppingCart } from "lucide-react"
+
 import MiniCart from "../PageCart/MiniCart"
 import MiniCartEmpty from "../PageCart/MiniCartEmpty"
 import {
@@ -31,14 +33,14 @@ export default function CartNavigation({ href, label }: LinkProps) {
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
-        <DropdownMenuTrigger className=" outline-none">
+        <DropdownMenuTrigger className="outline-none">
           <div className="flex gap-2">
             <ShoppingCart className="size-5" />
             <p>({cartItems.length})</p>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="absolute w-[80vw] min-w-[320px] max-w-96 -right-10"
+          className="absolute -right-10 w-[80vw] min-w-[320px] max-w-96"
           sideOffset={20}
         >
           {cart.length > 0 ? <MiniCart /> : <MiniCartEmpty />}

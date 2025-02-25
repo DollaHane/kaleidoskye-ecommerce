@@ -13,22 +13,21 @@ interface CartItemCardCheckoutProps {
 export default function CartItemCardCheckout({
   cartItem,
 }: CartItemCardCheckoutProps) {
-
   return (
     <div className="w-full">
       <div key={cartItem.id} className="flex flex-row items-center gap-4">
-        <div className="border rounded-full overflow-hidden size-12 flex-shrink-0">
+        <div className="size-12 flex-shrink-0 overflow-hidden rounded-full border">
           <Image
             src={Product}
             alt="kaleidoskye-powder-cannon"
             width={96}
             height={96}
-            className="object-cover w-full h-full rounded-full"
+            className="h-full w-full rounded-full object-cover"
           />
         </div>
 
         <div className="w-full flex-1 space-y-1">
-          <div className="w-full flex flex-row items-start justify-between mb-2">
+          <div className="mb-2 flex w-full flex-row items-start justify-between">
             <h3 className="font-medium">{cartItem.cannonName}</h3>
             <p className="font-medium text-primary">
               R {cartItem.totalPrice}
@@ -36,14 +35,14 @@ export default function CartItemCardCheckout({
             </p>
           </div>
 
-          <div className="w-full flex flex-row items-start justify-between mb-2">
+          <div className="mb-2 flex w-full flex-row items-start justify-between">
             <span className="text-sm text-muted-foreground">
               Quantity: {cartItem.quantity}
             </span>
           </div>
         </div>
       </div>
-      <hr className="mt-5"/>
+      <hr className="mt-5" />
     </div>
   )
 }

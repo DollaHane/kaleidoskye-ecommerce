@@ -152,7 +152,7 @@ export default function EditProfileForm({ onCancel, user }: EditProfileProps) {
     <AnimatePresence>
       <motion.div
         className="mx-auto max-w-2xl py-5"
-        initial={{ opacity: 0, scale: 1, translateX: -500}}
+        initial={{ opacity: 0, scale: 1, translateX: -500 }}
         animate={{ opacity: 1, scale: 1, translateX: 0 }}
         transition={{ duration: 0.5 }}
         exit={{ opacity: 0, scale: 1, translateX: -500 }}

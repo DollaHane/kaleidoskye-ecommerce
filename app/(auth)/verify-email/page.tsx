@@ -12,8 +12,8 @@ interface ResetPasswordProps {
 export default async function ResetPassword({
   searchParams,
 }: ResetPasswordProps) {
-  const params = await searchParams;
-  const { token } = params;
+  const params = await searchParams
+  const { token } = params
 
   const user: userType[] = await db
     .select()

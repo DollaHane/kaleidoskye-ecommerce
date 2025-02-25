@@ -2,12 +2,13 @@
 
 import * as React from "react"
 import { FC } from "react"
-import { useToast } from "@/hooks/use-toast"
-import { cn } from "@/lib/utils"
 import { signIn } from "next-auth/react"
 
-import { Button } from "../ui/button"
+import { cn } from "@/lib/utils"
+import { useToast } from "@/hooks/use-toast"
+
 import { Icons } from "../icons"
+import { Button } from "../ui/button"
 
 interface GoogleAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -40,7 +41,7 @@ const GoogleAuthForm: FC<GoogleAuthFormProps> = ({ className, ...props }) => {
       {...props}
     >
       <Button
-        className="w-full bg-background rounded-full"
+        className="w-full rounded-full bg-background"
         onClick={loginWithGoogle}
         disabled={isLoading}
       >

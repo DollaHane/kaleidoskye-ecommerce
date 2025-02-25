@@ -53,7 +53,7 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
     <div key={cartItem.id} className="flex flex-row items-start gap-4">
       <div
         className={cn(
-          "relative size-24 sm:size-40 md:size-52 overflow-hidden rounded-2xl border shadow-lg"
+          "relative size-24 overflow-hidden rounded-2xl border shadow-lg sm:size-40 md:size-52"
         )}
       >
         <Image
@@ -66,7 +66,7 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
       <div className="w-full flex-1 space-y-1">
         <div
           className={cn(
-            "w-full flex flex-col text-sm items-start justify-between mb-2",
+            "mb-2 flex w-full flex-col items-start justify-between text-sm",
             isAbove450pixels && "text-base",
             isAbove380pixels && "flex-row"
           )}
@@ -79,26 +79,30 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
         </div>
         <hr />
         <div className="flex flex-wrap py-2">
-          <div className="w-32 grid grid-cols-3 items-center justify-start gap-10">
+          <div className="grid w-32 grid-cols-3 items-center justify-start gap-10">
             {powder.map((pwd) => (
-              <div key={pwd[0].label} className="w-4">{pwd[0].image}</div>
+              <div key={pwd[0].label} className="w-4">
+                {pwd[0].image}
+              </div>
             ))}
           </div>
-          <div className="w-32 grid grid-cols-3 items-center justify-start gap-10 pl-[5px]">
+          <div className="grid w-32 grid-cols-3 items-center justify-start gap-10 pl-[5px]">
             {confetti.map((conf) => (
-              <div key={conf[0].label} className="w-3">{conf[0].image}</div>
+              <div key={conf[0].label} className="w-3">
+                {conf[0].image}
+              </div>
             ))}
           </div>
         </div>
         <div
           className={cn(
-            "w-full flex flex-row text-sm items-start justify-between mb-2",
+            "mb-2 flex w-full flex-row items-start justify-between text-sm",
             isAbove450pixels && "text-base"
           )}
         >
           <p className="text-sm text-muted-foreground">Quantity:</p>
         </div>
-        <div className="w-full flex items-center justify-start gap-4">
+        <div className="flex w-full items-center justify-start gap-4">
           <Input
             type="number"
             min={1}
@@ -111,7 +115,7 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
             onClick={() => setRemoveCartItem(cartItem.id)}
             className="items-center text-sm text-muted-foreground hover:text-destructive"
           >
-            <Trash2 className="h-6 w-6 mr-1" />
+            <Trash2 className="mr-1 h-6 w-6" />
           </button>
         </div>
       </div>

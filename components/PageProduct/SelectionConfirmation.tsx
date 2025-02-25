@@ -31,14 +31,14 @@ export default function SelectionConfirmation({
   } = useProductStore()
 
   return (
-    <div className="flex flex-col gap-5 mt-3">
+    <div className="mt-3 flex flex-col gap-5">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row gap-3">
-          <p className="font-bold text-lg">{product.heading}</p>
+          <p className="text-lg font-bold">{product.heading}</p>
         </div>
-        <p className="font-bold text-sm">R {product.priceCart}.00</p>
+        <p className="text-sm font-bold">R {product.priceCart}.00</p>
       </div>
-      <div className="w-full flex flex-row items-center justify-end gap-3">
+      <div className="flex w-full flex-row items-center justify-end gap-3">
         <p className="text-sm text-muted-foreground">Quantity:</p>
         <Input
           type="number"
@@ -49,11 +49,11 @@ export default function SelectionConfirmation({
           onChange={(event: any) => setQuantity(event?.target.value)}
         />
       </div>
-      <hr/>
+      <hr />
       {!noPowderNeeded ? (
         <div className="flex flex-row justify-between">
           <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-sm">Powder Colours:</h3>
+            <h3 className="text-sm font-bold">Powder Colours:</h3>
             <div className="flex flex-row gap-3">
               {selectedPowder &&
                 selectedPowder?.map((pwd: ProductImage) => (
@@ -66,21 +66,21 @@ export default function SelectionConfirmation({
                 ))}
             </div>
           </div>
-          <p className="font-bold text-sm">R {powderPrice}.00</p>
+          <p className="text-sm font-bold">R {powderPrice}.00</p>
         </div>
       ) : (
         <div className="flex flex-row justify-between">
           <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-sm">Powder Colours:</h3>
-            <p className="text-muted-foreground italic">No powder selected.</p>
+            <h3 className="text-sm font-bold">Powder Colours:</h3>
+            <p className="italic text-muted-foreground">No powder selected.</p>
           </div>
         </div>
       )}
       {!noConfettiNeeded ? (
         <div className="flex flex-row justify-between">
           <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-sm">Confetti Colours:</h3>
-            <div className="w-full flex flex-row gap-3">
+            <h3 className="text-sm font-bold">Confetti Colours:</h3>
+            <div className="flex w-full flex-row gap-3">
               {selectedConfetti &&
                 selectedConfetti?.map((conf: ProductImage) => (
                   <div className="flex flex-col items-center justify-start gap-1">
@@ -92,23 +92,25 @@ export default function SelectionConfirmation({
                 ))}
             </div>
           </div>
-          <p className="font-bold text-sm">R {confettiPrice}.00</p>
+          <p className="text-sm font-bold">R {confettiPrice}.00</p>
         </div>
       ) : (
         <div className="flex flex-row justify-between">
           <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-sm">Confetti Colours:</h3>
-            <div className="flex flex-row gap-2 items-center">
-              <AlertTriangle className="text-accent size-5" />
-              <p className="text-sm text-muted-foreground">No confetti selected</p>
+            <h3 className="text-sm font-bold">Confetti Colours:</h3>
+            <div className="flex flex-row items-center gap-2">
+              <AlertTriangle className="size-5 text-accent" />
+              <p className="text-sm text-muted-foreground">
+                No confetti selected
+              </p>
             </div>
           </div>
         </div>
       )}
-      <hr/>
+      <hr />
       <div className="flex flex-row justify-between">
-        <h3 className="font-bold text-lg">Subtotal (Incl. VAT):</h3>
-        <p className="font-bold text-lg text-blue-500">R {totalPrice}.00</p>
+        <h3 className="text-lg font-bold">Subtotal (Incl. VAT):</h3>
+        <p className="text-lg font-bold text-blue-500">R {totalPrice}.00</p>
       </div>
     </div>
   )

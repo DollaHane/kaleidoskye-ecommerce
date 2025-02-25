@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import Image from "next/image"
 import { UseGetUserProfile } from "@/server/services"
 
 import { userType } from "@/types/db"
@@ -9,14 +10,14 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardHeader,
   CardFooter,
+  CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Image from "next/image"
+import Checkout from "@/components/Assets/Checkout.png"
+
 import EditProfileForm from "../PageAccount/EditProfileForm"
 import { Button } from "../ui/button"
-import Checkout from "@/components/Assets/Checkout.png"
 
 const headingStyle = "font-semibold"
 const dataStyle = "text-primary"
@@ -73,11 +74,15 @@ export default function ShippingDetails() {
             <Button onClick={() => setEdit(true)}>Edit Shipping Details</Button>
           )}
         </CardContent>
-        <CardFooter className="p-0 mt-8">
-        <div className="w-full overflow-hidden rounded-2xl shadow-md">
-          <Image src={Checkout} alt="delivered to your doorstep" className="object-cover w-full h-full "/>
-        </div>
-      </CardFooter>
+        <CardFooter className="mt-8 p-0">
+          <div className="w-full overflow-hidden rounded-2xl shadow-md">
+            <Image
+              src={Checkout}
+              alt="delivered to your doorstep"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </CardFooter>
       </Card>
     )
   } else {

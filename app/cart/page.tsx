@@ -33,11 +33,11 @@ export default function CartPage() {
   let total = subTotal + shipping
 
   return (
-    <section className="container bg-background items-center min-h-screen pb-10">
-      <div className="w-11/12 md:w-10/12 h-full mx-auto pt-10">
+    <section className="container min-h-screen items-center bg-background pb-10">
+      <div className="mx-auto h-full w-11/12 pt-10 md:w-10/12">
         {!session?.user.id && (
-          <div className="mb-8 flex flex-col sm:flex-row items-center justify-between">
-            <div className="text-center sm:text-start pb-5 sm:pb-0">
+          <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
+            <div className="pb-5 text-center sm:pb-0 sm:text-start">
               <h2 className="text-lg font-medium">Already have an account?</h2>
               <p className="text-sm text-muted-foreground">
                 Sign in for a better experience.
@@ -70,7 +70,9 @@ export default function CartPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Cart Total</CardTitle>
-                <CardDescription>All prices are inclusive of VAT.</CardDescription>
+                <CardDescription>
+                  All prices are inclusive of VAT.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4">
@@ -93,7 +95,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <Link href="/checkout">
-                  <Button className="w-full mt-5" size="lg">
+                  <Button className="mt-5 w-full" size="lg">
                     Checkout
                   </Button>
                 </Link>

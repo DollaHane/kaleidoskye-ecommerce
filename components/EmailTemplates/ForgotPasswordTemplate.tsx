@@ -1,20 +1,21 @@
 import * as React from "react"
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
   Html,
-  Preview,
-  Text,
-  Link,
-  Column,
   Img,
+  Link,
+  Preview,
   Row,
   Section,
+  Text,
 } from "@react-email/components"
-import { currentYear } from "@/lib/utils"
+
 import { siteConfig, SiteConfig } from "@/config/site"
+import { currentYear } from "@/lib/utils"
 
 interface EmailTemplateProps {
   userEmail: string
@@ -86,16 +87,13 @@ export const ForgotPasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   return (
     <Html>
       <Head />
-      <Preview>You forgot the password for your {siteConfig.domainShort} account</Preview>
+      <Preview>
+        You forgot the password for your {siteConfig.domainShort} account
+      </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logo}>
-            <Img
-              width={250}
-              src={
-                ""
-              }
-            />
+            <Img width={250} src={""} />
           </Section>
 
           <Section style={sectionsBorders}>
@@ -109,9 +107,9 @@ export const ForgotPasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
           <Section style={content}>
             <Text style={paragraph}>Hi,</Text>
             <Text style={paragraph}>
-              You requested to update your password for your {siteConfig.businessName} account{" "}
-              {userEmail}. If this was not you, please contact us immeadiately
-              at {siteConfig.supportEmail}
+              You requested to update your password for your{" "}
+              {siteConfig.businessName} account {userEmail}. If this was not
+              you, please contact us immeadiately at {siteConfig.supportEmail}
             </Text>
             <Text style={paragraph}>
               However if you did request this password change, please click on
@@ -145,7 +143,8 @@ export const ForgotPasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
         <Section style={footer}>
           <Row>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
-              Copyright © {currentYear} {siteConfig.businessName}. All rights reserved.
+              Copyright © {currentYear} {siteConfig.businessName}. All rights
+              reserved.
             </Text>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
               This is a once off notification that contains important
@@ -162,10 +161,7 @@ export const ForgotPasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
                 T&apos;s & C&apos;s
               </Link>{" "}
               |{" "}
-              <Link
-                href={`${siteConfig.domain}/privacypolicy`}
-                target="_blank"
-              >
+              <Link href={`${siteConfig.domain}/privacypolicy`} target="_blank">
                 Privacy
               </Link>
             </Text>

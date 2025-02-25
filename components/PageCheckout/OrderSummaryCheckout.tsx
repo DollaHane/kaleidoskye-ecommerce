@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
 import { Button } from "../ui/button"
 import CartItemCardCheckout from "./CartItemCardCheckout"
 
@@ -71,7 +70,6 @@ export default function OrderSummaryCheckout() {
           </div>
         </div>
       </CardContent>
-      
     </Card>
   )
 }

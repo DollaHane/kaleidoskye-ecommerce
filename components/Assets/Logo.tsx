@@ -2,7 +2,7 @@ import React from "react"
 
 export default function Logo() {
   return (
-    <div className="w-full flex">
+    <div className="flex w-full">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80">
         <path
           className="fill-primary"

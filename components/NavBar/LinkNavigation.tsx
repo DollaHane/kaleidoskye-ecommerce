@@ -9,7 +9,7 @@ interface LinkProps {
 export default function LinkNavigation({ href, label }: LinkProps) {
   return (
     <div className="flex items-center justify-center">
-      <Link href={href} className="flex text-sm text-center">
+      <Link href={href} className="flex text-center text-sm">
         {label}
       </Link>
     </div>

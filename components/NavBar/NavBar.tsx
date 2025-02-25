@@ -2,9 +2,9 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from "@tanstack/react-query"
 import { User } from "lucide-react"
 import { getServerSession } from "next-auth"
@@ -24,24 +24,24 @@ export default async function NavBar() {
 
   return (
     <header className="sticky top-0 z-50 flex flex-col items-center justify-center bg-accent shadow-md backdrop-blur-md">
-      <div className="container relative h-20 flex w-11/12 items-center justify-between px-8">
+      <div className="container relative flex h-20 w-11/12 items-center justify-between px-8">
         {/* LEFT */}
         <div className="z-50">
           <Menu />
         </div>
 
         {/* CENTER */}
-        <div className="absolute top-0 left-0 flex w-full items-center justify-center z-40">
+        <div className="absolute left-0 top-0 z-40 flex w-full items-center justify-center">
           <Image
             src={Logo}
             alt="kaleidoskye-party-cannons"
-            className=" w-36 hidden sm:block"
+            className="hidden w-36 sm:block"
           />
         </div>
 
         {/* RIGHT */}
         {session?.user ? (
-          <div className="flex gap-8 z-50">
+          <div className="z-50 flex gap-8">
             <HydrationBoundary state={dehydrate(queryClient)}>
               <LinkNavigation href="/account" label="Account" />
               <CartNavigation href="/cart" label="Cart" />
@@ -50,7 +50,7 @@ export default async function NavBar() {
         ) : (
           <Button
             variant="icon"
-            className="flex h-10 w-10 rounded-full border border-transparent text-primary hover:text-customAccent z-50"
+            className="hover:text-customAccent z-50 flex h-10 w-10 rounded-full border border-transparent text-primary"
           >
             <Link href="/signin" className="w-auto">
               Signin

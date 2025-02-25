@@ -1,20 +1,21 @@
 import * as React from "react"
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
   Html,
-  Preview,
-  Text,
-  Link,
-  Column,
   Img,
+  Link,
+  Preview,
   Row,
   Section,
+  Text,
 } from "@react-email/components"
-import { currentYear } from "@/lib/utils"
+
 import { siteConfig } from "@/config/site"
+import { currentYear } from "@/lib/utils"
 
 interface EmailTemplateProps {
   userName: string
@@ -87,12 +88,7 @@ export const updatePasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
       <Body style={main}>
         <Container style={container}>
           <Section style={logo}>
-            <Img
-              width={250}
-              src={
-                ""
-              }
-            />
+            <Img width={250} src={""} />
           </Section>
 
           <Section style={sectionsBorders}>
@@ -106,8 +102,9 @@ export const updatePasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
           <Section style={content}>
             <Text style={paragraph}>Hi, {userName}</Text>
             <Text style={paragraph}>
-              You requested to reset your password for your {siteConfig.businessName} account{" "}
-              {userEmail}. If this was not you, please contact us urgently at
+              You requested to reset your password for your{" "}
+              {siteConfig.businessName} account {userEmail}. If this was not
+              you, please contact us urgently at
               {siteConfig.supportEmail}
             </Text>
             <Text style={paragraph}>
@@ -142,7 +139,8 @@ export const updatePasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
         <Section style={footer}>
           <Row>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
-              Copyright © {currentYear} {siteConfig.businessName}. All rights reserved.
+              Copyright © {currentYear} {siteConfig.businessName}. All rights
+              reserved.
             </Text>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
               This is a once off notification that contains important
@@ -159,10 +157,7 @@ export const updatePasswordTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
                 T&apos;s & C&apos;s
               </Link>{" "}
               |{" "}
-              <Link
-                href={`${siteConfig.domain}/privacypolicy`}
-                target="_blank"
-              >
+              <Link href={`${siteConfig.domain}/privacypolicy`} target="_blank">
                 Privacy
               </Link>
             </Text>

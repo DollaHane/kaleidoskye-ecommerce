@@ -9,9 +9,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ulid } from "ulid"
 
 import { Cannon } from "@/lib/product-attributes"
-import {
-  AddToCartValidationCreationRequest,
-} from "@/lib/validators/addToCartValidation"
+import { AddToCartValidationCreationRequest } from "@/lib/validators/addToCartValidation"
 import { toast } from "@/hooks/use-toast"
 import {
   CloseButton,
@@ -158,37 +156,37 @@ export default function AddToCartModal({ product }: AddToCartModal) {
     <div>
       <Modal>
         <div className="absolute bottom-[95px] right-3">
-          <ModalTrigger className="relative flex h-10 w-32 group bg-accent items-center justify-center text-center hover:bg-black/90">
-            <span className="flex group-hover:translate-x-40 font-bold text-center transition duration-500">
+          <ModalTrigger className="group relative flex h-10 w-32 items-center justify-center bg-accent text-center hover:bg-black/90">
+            <span className="flex text-center font-bold transition duration-500 group-hover:translate-x-40">
               Add to Cart
             </span>
-            <div className="-translate-x-40 group-hover:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20">
+            <div className="absolute inset-0 z-20 flex -translate-x-40 items-center justify-center text-white transition duration-500 group-hover:translate-x-0">
               <Icons.basket />
             </div>
           </ModalTrigger>
         </div>
         <ModalBody>
-          <ModalContent className="flex flex-col relative min-h-[600px]">
+          <ModalContent className="relative flex min-h-[600px] flex-col">
             <AnimatePresence initial={false}>
               {step === 0 ? (
                 <motion.div
-                  className="w-full absolute top-5 left-0 min-h-[550px] z-30 p-5"
+                  className="absolute left-0 top-5 z-30 min-h-[550px] w-full p-5"
                   initial={{ opacity: 0, scale: 1, translateY: -1000 }}
                   animate={{ opacity: 1, scale: 1, translateY: 0 }}
                   transition={{ duration: 1 }}
                   exit={{ opacity: 0, scale: 1, translateY: -1000 }}
                   key="one"
                 >
-                  <h3 className="relative text-2xl font-semibold text-primary mb-3">
+                  <h3 className="relative mb-3 text-2xl font-semibold text-primary">
                     {product.heading}
                   </h3>
-                    <div className="relative flex flex-col">
-                      <hr/>
-                      <PowderSelection />
-                      <hr/>
-                      <ConfettiSelection />
-                    </div>
-                  <ModalFooter className="gap-4 mt-5">
+                  <div className="relative flex flex-col">
+                    <hr />
+                    <PowderSelection />
+                    <hr />
+                    <ConfettiSelection />
+                  </div>
+                  <ModalFooter className="mt-5 gap-4">
                     <CloseButton />
                     <Button
                       variant="default"
@@ -204,18 +202,18 @@ export default function AddToCartModal({ product }: AddToCartModal) {
             <AnimatePresence initial={false}>
               {step === 1 ? (
                 <motion.div
-                  className="w-full flex absolute top-5 left-0 flex-col min-h-[550px] z-30 p-5"
+                  className="absolute left-0 top-5 z-30 flex min-h-[550px] w-full flex-col p-5"
                   initial={{ opacity: 0, scale: 1, translateY: 1000 }}
                   animate={{ opacity: 1, scale: 1, translateY: 0 }}
                   transition={{ duration: 1 }}
                   exit={{ opacity: 0, scale: 1, translateY: 1000 }}
                   key="one"
                 >
-                  <h3 className="relative text-2xl font-semibold text-primary mb-3">
+                  <h3 className="relative mb-3 text-2xl font-semibold text-primary">
                     Selection Confirmation:
                   </h3>
-                  <hr/>
-                  <div className="relative w-full min-h-[400px] flex flex-col">
+                  <hr />
+                  <div className="relative flex min-h-[400px] w-full flex-col">
                     <SelectionConfirmation
                       product={product}
                       totalPrice={totalPrice}
@@ -223,7 +221,7 @@ export default function AddToCartModal({ product }: AddToCartModal) {
                       selectedConfetti={selectedConfetti}
                     />
                   </div>
-                  <ModalFooter className="gap-4 mt-10">
+                  <ModalFooter className="mt-10 gap-4">
                     <Button
                       variant="secondary"
                       onClick={() => setStep(step - 1)}

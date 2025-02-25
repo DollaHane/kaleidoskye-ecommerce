@@ -46,7 +46,6 @@ export async function POST(req: Request) {
         .where(eq(users.email, email))
 
       try {
-        
         const template = await render(
           ForgotPasswordTemplate({
             userEmail: email,

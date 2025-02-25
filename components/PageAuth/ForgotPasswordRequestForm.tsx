@@ -53,7 +53,10 @@ export default function ForgotPasswordRequestForm() {
       const payload: ForgotPasswordRequestCreationRequest = {
         email,
       }
-      const { data } = await axios.post("/api/auth/password-reset-request", payload)
+      const { data } = await axios.post(
+        "/api/auth/password-reset-request",
+        payload
+      )
 
       return data
     },
@@ -113,7 +116,7 @@ export default function ForgotPasswordRequestForm() {
   return (
     <div>
       <AlertDialog>
-        <AlertDialogTrigger className="group flex h-9 items-center text-sm text-primary justify-center rounded-full border border-transparent bg-background px-3 shadow-lg hover:bg-muted">
+        <AlertDialogTrigger className="group flex h-9 items-center justify-center rounded-full border border-transparent bg-background px-3 text-sm text-primary shadow-lg hover:bg-muted">
           Forgot Password
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -121,7 +124,7 @@ export default function ForgotPasswordRequestForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <AlertDialogHeader>
                 <AlertDialogTitle className="mb-5 font-bold">
-                <p className="italic text-primary">Forgot Password Reset:</p>
+                  <p className="italic text-primary">Forgot Password Reset:</p>
                 </AlertDialogTitle>
 
                 <AlertDialogDescription>
@@ -143,7 +146,7 @@ export default function ForgotPasswordRequestForm() {
                   </div>
 
                   <div>
-                  <p className="text-xs italic text-muted-foreground">
+                    <p className="text-xs italic text-muted-foreground">
                       (Note: Please supply your accound details, after which
                       we&apos;ll send you a link to reset your password.)
                     </p>
@@ -154,8 +157,12 @@ export default function ForgotPasswordRequestForm() {
               <AlertDialogFooter>
                 {!submitted ? (
                   <div className="flex w-full flex-col justify-between gap-5 md:flex-row">
-                    <div className="space-x-5 flex w-full">
-                      <Button type="submit" variant="outline" className="w-20 relative flex items-center justify-center">
+                    <div className="flex w-full space-x-5">
+                      <Button
+                        type="submit"
+                        variant="outline"
+                        className="relative flex w-20 items-center justify-center"
+                      >
                         {isSubmitting ? (
                           <Loader2 className="absolute flex h-5 w-5 animate-spin" />
                         ) : (

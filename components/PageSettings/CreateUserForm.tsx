@@ -10,8 +10,8 @@ import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
 import {
-  CreateUserValidationRequest,
   createUserValidation,
+  CreateUserValidationRequest,
 } from "@/lib/validators/createUserValidation"
 import { toast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -118,7 +118,7 @@ export default function CreateUserForm() {
   return (
     <div className="w-full p-5">
       <div>
-        <h2 className=" text-lg font-semibold mb-10">Create User:</h2>
+        <h2 className="mb-10 text-lg font-semibold">Create User:</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -159,12 +159,12 @@ export default function CreateUserForm() {
                 <FormItem className="flex items-center gap-5">
                   <FormControl>
                     <Checkbox
-                      className="w-5 h-5"
+                      className="h-5 w-5"
                       checked={admin}
                       onCheckedChange={() => setAdmin(!admin)}
                     />
                   </FormControl>
-                  <p className="text-sm flex text-muted-foreground pb-2">
+                  <p className="flex pb-2 text-sm text-muted-foreground">
                     Assign user application administrative rights?
                   </p>
                   <FormMessage />
@@ -177,7 +177,7 @@ export default function CreateUserForm() {
               className="relative flex w-20"
             >
               {submitted ? (
-                <Loader className="flex absolute h-6 w-6 animate-spin" />
+                <Loader className="absolute flex h-6 w-6 animate-spin" />
               ) : (
                 <p>Submit</p>
               )}

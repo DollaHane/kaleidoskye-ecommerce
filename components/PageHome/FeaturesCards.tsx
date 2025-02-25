@@ -17,7 +17,7 @@ interface FeaturesCardProps {
 
 export default function FeaturesCard({ features }: FeaturesCardProps) {
   return (
-    <div className="w-full relative max-w-80 p-5 shadow-md rounded-2xl">
+    <div className="relative w-full max-w-80 rounded-2xl p-5 shadow-md">
       <GlowingEffect
         spread={40}
         glow={true}
@@ -26,21 +26,21 @@ export default function FeaturesCard({ features }: FeaturesCardProps) {
         inactiveZone={0.01}
         borderWidth={3}
       />
-      <div className="flex justify-between w-full">
+      <div className="flex w-full justify-between">
         <FeatureCardsIcons icon={features.icon} />
         <h3
           id={features.id}
-          className="w-full text-sm sm:text-base text-right font-semibold"
+          className="w-full text-right text-sm font-semibold sm:text-base"
         >
           {features.heading}
         </h3>
       </div>
-      <hr className="w-full my-2" />
+      <hr className="my-2 w-full" />
       <p className="text-xs sm:text-sm">{features.description}</p>
       <Image
         src={GraphicOne}
         alt="eco-friendly"
-        className="w-6 absolute bottom-2 right-2"
+        className="absolute bottom-2 right-2 w-6"
       />
     </div>
   )

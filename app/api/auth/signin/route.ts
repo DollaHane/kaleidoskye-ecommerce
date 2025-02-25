@@ -2,6 +2,7 @@ import { db } from "@/server/db"
 import { users } from "@/server/db/schema"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
+
 import { siteConfig } from "@/config/site"
 
 export async function POST(req: Request) {
@@ -20,7 +21,6 @@ export async function POST(req: Request) {
 
     if (user[0] !== undefined) {
       if (
-        user[0].firstSignin === true &&
         user[0].password === siteConfig.defaultUserPassword
       ) {
         if (user[0].password === password) {

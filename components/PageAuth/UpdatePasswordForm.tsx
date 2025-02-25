@@ -153,7 +153,7 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
     <div className="flex flex-col">
       <h1 className="mt-10 text-center">
         Reset password for account:{" "}
-        <span className="italic text-customAccent">{user[0].email}</span>
+        <span className="text-customAccent italic">{user[0].email}</span>
       </h1>
       <Form {...form}>
         <form
@@ -215,10 +215,10 @@ export default function UpdatePasswordForm({ user }: UpdatePasswordFormProps) {
             <Button
               type="submit"
               variant="outline"
-              className="flex relative items-center justify-center"
+              className="relative flex items-center justify-center"
             >
               {isSubmitting ? (
-                <Loader2 className="h-5 w-5 absolute flex animate-spin" />
+                <Loader2 className="absolute flex h-5 w-5 animate-spin" />
               ) : (
                 "Update Password"
               )}

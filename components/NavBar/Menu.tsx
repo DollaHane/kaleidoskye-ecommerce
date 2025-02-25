@@ -52,14 +52,14 @@ export default function Menu() {
         <SheetContent side="left" className="w-full sm:min-w-[50vw]">
           <SheetTitle />
           <SheetDescription />
-          <div className="size-full flex flex-col relative p-5 items-left">
-            <div className="w-full min-h-20 flex flex-col gap-5 items-center justify-center mb-10">
+          <div className="items-left relative flex size-full flex-col p-5">
+            <div className="mb-10 flex min-h-20 w-full flex-col items-center justify-center gap-5">
               <Image
                 src={Logo}
                 alt="kaleidoskye-party-cannons"
                 className="w-1/2 min-w-52 sm:hidden"
               />
-              <div className="w-full flex text-zinc-700 items-center justify-between px-5">
+              <div className="flex w-full items-center justify-between px-5 text-zinc-700">
                 <div className="size-10">
                   <Icons.facebook />
                 </div>

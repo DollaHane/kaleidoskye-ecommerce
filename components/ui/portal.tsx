@@ -30,13 +30,16 @@ export const Portal = ({ children, content }: RootLayoutProps) => {
         createPortal(
           <div
             onMouseEnter={() => setIsHovered(true)}
-            className="absolute right-0 bg-background top-28 md:top-16 z-50 shadow-lg rounded-md animate-in slide-in-from-bottom-3"
+            className="absolute right-0 top-28 z-50 rounded-md bg-background shadow-lg animate-in slide-in-from-bottom-3 md:top-16"
           >
-            <div className="w-full flex items-center justify-end">
-            <Button variant="ghost" className="hover:bg-transparent" onClick={() => setIsHovered(false)}>
-              <X />
-            </Button>
-
+            <div className="flex w-full items-center justify-end">
+              <Button
+                variant="ghost"
+                className="hover:bg-transparent"
+                onClick={() => setIsHovered(false)}
+              >
+                <X />
+              </Button>
             </div>
             {content}
           </div>,

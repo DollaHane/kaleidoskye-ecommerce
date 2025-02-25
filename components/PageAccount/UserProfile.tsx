@@ -43,7 +43,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
           </CardHeader>
           <CardContent className="space-y-4 overflow-hidden">
             <div className="flex flex-col items-center space-y-2">
-              <Avatar className="w-24 h-24">
+              <Avatar className="h-24 w-24">
                 {/* @ts-ignore */}
                 <AvatarImage src={user[0].image} alt="profile-picture" />
               </Avatar>
@@ -52,7 +52,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
             </div>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
+                <MapPin className="h-4 w-4 text-muted-foreground" />
                 {shippingAddress.unitNum === "" ? (
                   <p>
                     {shippingAddress.streetAddress}, {shippingAddress.city},{" "}
@@ -68,7 +68,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
               </div>
               {orders && orders.length > 0 ? (
                 <div className="flex items-center space-x-2">
-                  <Package className="w-4 h-4 text-muted-foreground" />
+                  <Package className="h-4 w-4 text-muted-foreground" />
                   <p>
                     <span className="font-semibold text-blue-500">
                       {orders.length}
@@ -78,7 +78,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
-                  <Package className="w-4 h-4 text-muted-foreground" />
+                  <Package className="h-4 w-4 text-muted-foreground" />
                   <p>
                     <span className="font-semibold text-blue-500">0</span>{" "}
                     orders in total
@@ -105,22 +105,22 @@ export default function UserProfile({ orders }: UserProfileProps) {
           </CardHeader>
           <CardContent className="space-y-4 overflow-hidden">
             <div className="flex flex-col items-center space-y-2">
-              <Avatar className="w-24 h-24 flex items-center justify-center">
+              <Avatar className="flex h-24 w-24 items-center justify-center">
                 {/* @ts-ignore */}
-                <User className=""/>
+                <User className="" />
               </Avatar>
               <h2 className="text-2xl font-bold">Name</h2>
               <p className="text-muted-foreground">namesurname@acme.co.za</p>
             </div>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
+                <MapPin className="h-4 w-4 text-muted-foreground" />
                 <p>Shipping address</p>
               </div>
               <div className="flex items-center space-x-2">
-                <Package className="w-4 h-4 text-muted-foreground" />
+                <Package className="h-4 w-4 text-muted-foreground" />
                 <p>
-                  <span className="font-semibold texted-muted-foreground">
+                  <span className="texted-muted-foreground font-semibold">
                     0
                   </span>{" "}
                   orders in total

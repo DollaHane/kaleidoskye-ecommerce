@@ -198,10 +198,10 @@ export default function ForgotPasswordForm() {
               type="submit"
               // disabled={disabled}
               variant="outline"
-              className="flex relative items-center justify-center"
+              className="relative flex items-center justify-center"
             >
               {isSubmitting ? (
-                <Loader2 className="h-5 w-5 absolute flex animate-spin" />
+                <Loader2 className="absolute flex h-5 w-5 animate-spin" />
               ) : (
                 "Reset Password"
               )}
