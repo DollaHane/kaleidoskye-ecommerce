@@ -100,7 +100,7 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
+          className="fixed inset-0 z-50 flex size-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
         >
           <Overlay />
 
@@ -184,7 +184,7 @@ const Overlay = ({ className }: { className?: string }) => {
         opacity: 0,
         backdropFilter: "blur(0px)",
       }}
-      className={`fixed inset-0 z-50 h-full w-full bg-background/20 bg-opacity-50 ${className}`}
+      className={`fixed inset-0 z-50 size-full bg-background/50 ${className}`}
     ></motion.div>
   )
 }
@@ -206,7 +206,7 @@ const CloseIcon = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="h-4 w-4 text-primary transition duration-200 group-hover:rotate-3 group-hover:scale-125"
+        className="size-4 text-primary transition duration-200 group-hover:rotate-3 group-hover:scale-125"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 6l-12 12" />

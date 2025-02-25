@@ -115,7 +115,7 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
             onClick={() => setRemoveCartItem(cartItem.id)}
             className="items-center text-sm text-muted-foreground hover:text-destructive"
           >
-            <Trash2 className="mr-1 h-6 w-6" />
+            <Trash2 className="mr-1 size-6" />
           </button>
         </div>
       </div>

@@ -4,7 +4,6 @@ import Link from "next/link"
 import { BookOpen, Cog, Home, PieChart } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
-
 import { User } from "@/types/user"
 
 import { ThemeToggle } from "../theme-toggle"
@@ -34,7 +33,7 @@ export function UserAccountNav({ user, adminId }: UserAccountNavProps) {
       <DropdownMenuTrigger className="outline-none">
         <UserAvatar
           user={{ name: userName, image: userImage }}
-          className="h-8 w-8 shadow-lg"
+          className="size-8 shadow-lg"
         />
       </DropdownMenuTrigger>
 
@@ -56,8 +55,8 @@ export function UserAccountNav({ user, adminId }: UserAccountNavProps) {
           {adminId === userId && (
             <DropdownMenuItem asChild>
               <div>
-                <div className="relative flex h-8 w-8 items-center justify-center">
-                  <Cog className="absolute h-6 w-6" />
+                <div className="relative flex size-8 items-center justify-center">
+                  <Cog className="absolute size-6" />
                 </div>
                 <Link href="/admin-dash" className="pl-2">
                   Admin
@@ -68,8 +67,8 @@ export function UserAccountNav({ user, adminId }: UserAccountNavProps) {
 
           <DropdownMenuItem asChild>
             <div>
-              <div className="relative flex h-8 w-8 items-center justify-center">
-                <Home className="absolute h-6 w-6" />
+              <div className="relative flex size-8 items-center justify-center">
+                <Home className="absolute size-6" />
               </div>
               <Link href="/" className="pl-2">
                 Home
@@ -79,8 +78,8 @@ export function UserAccountNav({ user, adminId }: UserAccountNavProps) {
 
           <DropdownMenuItem asChild>
             <div>
-              <div className="relative flex h-8 w-8 items-center justify-center">
-                <PieChart className="absolute h-6 w-6" />
+              <div className="relative flex size-8 items-center justify-center">
+                <PieChart className="absolute size-6" />
               </div>
               <Link href="/assets" className="pl-2">
                 Assets

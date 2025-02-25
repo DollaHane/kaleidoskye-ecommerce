@@ -79,7 +79,7 @@ export default function ShippingDetails() {
             <Image
               src={Checkout}
               alt="delivered to your doorstep"
-              className="h-full w-full object-cover"
+              className="size-full object-cover"
             />
           </div>
         </CardFooter>

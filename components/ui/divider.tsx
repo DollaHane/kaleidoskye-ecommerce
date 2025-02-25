@@ -8,7 +8,7 @@ function Divider({ className, ...props }: DividerProps) {
   return (
     <div
       className={cn(
-        "h-[1px] w-full bg-gradient-to-r from-background to-muted-foreground",
+        "h-px w-full bg-gradient-to-r from-background to-muted-foreground",
         className
       )}
       {...props}

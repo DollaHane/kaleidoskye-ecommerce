@@ -159,7 +159,7 @@ export default function SignIn() {
                 className="relative flex w-20"
               >
                 {submitted ? (
-                  <Loader className="absolute flex h-6 w-6 animate-spin" />
+                  <Loader className="absolute flex size-6 animate-spin" />
                 ) : (
                   <p>Login</p>
                 )}

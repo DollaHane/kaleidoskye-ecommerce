@@ -164,7 +164,7 @@ export default function ForgotPasswordRequestForm() {
                         className="relative flex w-20 items-center justify-center"
                       >
                         {isSubmitting ? (
-                          <Loader2 className="absolute flex h-5 w-5 animate-spin" />
+                          <Loader2 className="absolute flex size-5 animate-spin" />
                         ) : (
                           "Send"
                         )}

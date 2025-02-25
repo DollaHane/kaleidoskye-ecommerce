@@ -270,7 +270,7 @@ export default function EditProfileForm({ onCancel, user }: EditProfileProps) {
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <span>
-                    <Loader2 className="size-3 animate-spin" /> "Saving..."
+                    <Loader2 className="size-3 animate-spin" /> &quot;Saving...&quot;
                   </span>
                 ) : (
                   "Save Address"

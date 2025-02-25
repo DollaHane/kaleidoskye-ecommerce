@@ -26,13 +26,13 @@ export default function MiniCart() {
         {cartItems &&
           cartItems.map((item) => (
             <div key={item.id} className="flex flex-row items-center gap-4">
-              <div className="size-12 flex-shrink-0 overflow-hidden rounded-full border">
+              <div className="size-12 shrink-0 overflow-hidden rounded-full border">
                 <Image
                   src={Product}
                   alt="kaleidoskye-powder-cannon"
                   width={96}
                   height={96}
-                  className="h-full w-full rounded-full object-cover"
+                  className="size-full rounded-full object-cover"
                 />
               </div>
 
@@ -53,7 +53,7 @@ export default function MiniCart() {
                     onClick={() => setRemoveCartItem(item.id)}
                     className="inline-flex items-center text-sm text-muted-foreground hover:text-destructive"
                   >
-                    <Trash2 className="mr-1 h-4 w-4" />
+                    <Trash2 className="mr-1 size-4" />
                     Remove
                   </button>
                 </div>

@@ -7,7 +7,8 @@ import {
   User,
   type Icon as LucideIcon,
 } from "lucide-react"
-
+import Image from "next/image"
+import Logo from "@/components/Assets/Kaleidoskye Round Logo.png"
 export type Icon = LucideIcon
 
 export const Icons = {
@@ -15,7 +16,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   twitter: Twitter,
-  logo: (props: LucideProps) => <img src="@/src/assets/PepperMint.png" />,
+  logo: (props: LucideProps) => <Image src={Logo} alt="kaleidoskye"/>,
   gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

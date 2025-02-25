@@ -7,7 +7,7 @@ export default function MiniCartEmpty() {
     <div className="flex flex-col items-center justify-center gap-4 py-8">
       <h1 className="text-xl font-semibold">Cart</h1>
       <div className="relative mb-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-sm text-white">
+        <div className="flex size-8 items-center justify-center rounded-full bg-black text-sm text-white">
           0
         </div>
       </div>

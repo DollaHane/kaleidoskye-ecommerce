@@ -16,13 +16,13 @@ export default function CartItemCardCheckout({
   return (
     <div className="w-full">
       <div key={cartItem.id} className="flex flex-row items-center gap-4">
-        <div className="size-12 flex-shrink-0 overflow-hidden rounded-full border">
+        <div className="size-12 shrink-0 overflow-hidden rounded-full border">
           <Image
             src={Product}
             alt="kaleidoskye-powder-cannon"
             width={96}
             height={96}
-            className="h-full w-full rounded-full object-cover"
+            className="size-full rounded-full object-cover"
           />
         </div>
 

@@ -46,7 +46,7 @@ export default function OrderSummaryCheckout() {
             <div className="flex justify-between">
               <div className="flex items-center gap-2">
                 <span>Subtotal (Incl. VAT)</span>
-                <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                <HelpCircle className="size-4 text-muted-foreground" />
               </div>
               <span>R {subTotal}.00</span>
             </div>

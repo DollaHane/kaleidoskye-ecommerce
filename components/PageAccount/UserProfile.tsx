@@ -43,7 +43,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
           </CardHeader>
           <CardContent className="space-y-4 overflow-hidden">
             <div className="flex flex-col items-center space-y-2">
-              <Avatar className="h-24 w-24">
+              <Avatar className="size-24">
                 {/* @ts-ignore */}
                 <AvatarImage src={user[0].image} alt="profile-picture" />
               </Avatar>
@@ -52,7 +52,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
             </div>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <MapPin className="size-4 text-muted-foreground" />
                 {shippingAddress.unitNum === "" ? (
                   <p>
                     {shippingAddress.streetAddress}, {shippingAddress.city},{" "}
@@ -68,7 +68,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
               </div>
               {orders && orders.length > 0 ? (
                 <div className="flex items-center space-x-2">
-                  <Package className="h-4 w-4 text-muted-foreground" />
+                  <Package className="size-4 text-muted-foreground" />
                   <p>
                     <span className="font-semibold text-blue-500">
                       {orders.length}
@@ -78,7 +78,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
-                  <Package className="h-4 w-4 text-muted-foreground" />
+                  <Package className="size-4 text-muted-foreground" />
                   <p>
                     <span className="font-semibold text-blue-500">0</span>{" "}
                     orders in total
@@ -105,7 +105,7 @@ export default function UserProfile({ orders }: UserProfileProps) {
           </CardHeader>
           <CardContent className="space-y-4 overflow-hidden">
             <div className="flex flex-col items-center space-y-2">
-              <Avatar className="flex h-24 w-24 items-center justify-center">
+              <Avatar className="flex size-24 items-center justify-center">
                 {/* @ts-ignore */}
                 <User className="" />
               </Avatar>
@@ -114,11 +114,11 @@ export default function UserProfile({ orders }: UserProfileProps) {
             </div>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <MapPin className="size-4 text-muted-foreground" />
                 <p>Shipping address</p>
               </div>
               <div className="flex items-center space-x-2">
-                <Package className="h-4 w-4 text-muted-foreground" />
+                <Package className="size-4 text-muted-foreground" />
                 <p>
                   <span className="texted-muted-foreground font-semibold">
                     0

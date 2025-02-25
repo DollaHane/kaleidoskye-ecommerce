@@ -50,7 +50,7 @@ export default async function NavBar() {
         ) : (
           <Button
             variant="icon"
-            className="hover:text-customAccent z-50 flex h-10 w-10 rounded-full border border-transparent text-primary"
+            className="hover:text-customAccent z-50 flex size-10 rounded-full border border-transparent text-primary"
           >
             <Link href="/signin" className="w-auto">
               Signin

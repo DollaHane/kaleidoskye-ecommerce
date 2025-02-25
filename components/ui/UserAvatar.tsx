@@ -14,7 +14,7 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>
       {user.image ? (
-        <div className="relative aspect-square h-full w-full">
+        <div className="relative aspect-square size-full">
           <Image
             fill
             className="shadow-lg"
@@ -26,7 +26,7 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
       ) : (
         <AvatarFallback>
           <span className="sr-only relative">{user?.name}</span>
-          <UserCheck className="absolute right-1 h-5 w-5" />
+          <UserCheck className="absolute right-1 size-5" />
         </AvatarFallback>
       )}
     </Avatar>
