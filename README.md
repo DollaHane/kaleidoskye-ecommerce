@@ -2,7 +2,7 @@
 
 A sleak e-commerce store implimentation for Kaleidoskye who are passionate about colourful, eco-friendly powder cannons.
 
-![Project Image](https://github.com/DollaHane/build-software-template/blob/main/components/Assets/Thumbnail.png)
+![Project Image](https://github.com/DollaHane/kaleidoskye-ecommerce/blob/main/components/Assets/Thumbnail.png)
 
 ## Features
 
