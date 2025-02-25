@@ -6,13 +6,11 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query"
-import { User } from "lucide-react"
 import { getServerSession } from "next-auth"
 
 import { authOptions } from "@/lib/auth/auth-options"
 import Logo from "@/components/Assets/Logo.png"
 
-import { ThemeToggle } from "../theme-toggle"
 import { Button } from "../ui/button"
 import CartNavigation from "./CartNavigation"
 import LinkNavigation from "./LinkNavigation"
