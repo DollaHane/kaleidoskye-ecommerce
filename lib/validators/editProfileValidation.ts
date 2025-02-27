@@ -6,6 +6,7 @@ export const validateEditProfile = z.object({
   phone: z.string(),
   shippingAddress: z.object({
     streetAddress: z.string().min(1, "Street address is required"),
+    suburb: z.string().min(1, "Suburb is required"),
     unitNum: z.string().optional(),
     city: z.string().min(1, "City is required"),
     province: z.string().min(1, "Province is required"),

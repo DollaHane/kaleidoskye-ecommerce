@@ -51,6 +51,7 @@ export default function EditProfileForm({ onCancel, user }: EditProfileProps) {
       phone: JSON.stringify(user.phone) || "",
       shippingAddress: {
         streetAddress: shippingAddress.streetAddress || "",
+        suburb: shippingAddress.suburb || "",
         unitNum: shippingAddress.unitNum || "",
         city: shippingAddress.city || "",
         province: shippingAddress.province || "",
@@ -137,6 +138,7 @@ export default function EditProfileForm({ onCancel, user }: EditProfileProps) {
       phone: value.phone,
       shippingAddress: {
         streetAddress: value.shippingAddress.streetAddress,
+        suburb: value.shippingAddress.suburb,
         unitNum: value.shippingAddress.unitNum,
         city: value.shippingAddress.city,
         province: value.shippingAddress.province,
@@ -209,6 +211,18 @@ export default function EditProfileForm({ onCancel, user }: EditProfileProps) {
                 <FormItem>
                   <FormControl>
                     <Input placeholder="Street Address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="shippingAddress.suburb"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Suburb" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
@@ -41,10 +41,10 @@ export default function CartPage() {
     } else {
       setCheckoutDisabled(true)
     }
-  }, [total]);
+  }, [total])
 
   return (
-    <section className="container min-h-screen items-center bg-background pb-10">
+    <section className="container mb-10 min-h-screen items-center bg-background">
       <div className="mx-auto h-full w-11/12 pt-10 md:w-10/12">
         {!session?.user.id && (
           <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
@@ -110,7 +110,11 @@ export default function CartPage() {
                   </div>
                 </div>
                 <Link href="/checkout">
-                  <Button className="mt-5 w-full" size="lg" disabled={checkoutDisabled}>
+                  <Button
+                    className="mt-5 w-full"
+                    size="lg"
+                    disabled={checkoutDisabled}
+                  >
                     Checkout
                   </Button>
                 </Link>

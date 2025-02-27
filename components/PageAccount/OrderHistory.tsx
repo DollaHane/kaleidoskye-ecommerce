@@ -68,7 +68,7 @@ export default function OrderHistory({ orders }: OrderHistoryProps) {
           <div className="mt-10 flex w-full flex-col items-center justify-center gap-3">
             <h2 className="font-semibold">We have no orders on record</h2>
             <p className="italic text-muted-foreground">
-              Head to the store to add some colour to your life!
+              Head to the store to add some colour to the occasion!
             </p>
             <div className="mb-20 mt-5 flex w-full items-center justify-center">
               <Link href={siteConfig.links.store}>

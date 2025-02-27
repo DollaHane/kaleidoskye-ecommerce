@@ -22,12 +22,12 @@ export default async function AccountPage() {
     .where(eq(orders.userId, session.user.id))
 
   return (
-    <section className="container min-h-screen items-center bg-background">
+    <section className="container mb-10 min-h-screen items-center bg-background">
       <div className="mx-auto h-full w-11/12 pt-10 md:w-10/12">
         <div className="pb-5 md:col-span-1">
           <UserProfile orders={order} />
         </div>
-        <div className="pb-5 md:col-span-2">
+        <div className="md:col-span-2">
           <OrderHistory orders={order} />
         </div>
       </div>
