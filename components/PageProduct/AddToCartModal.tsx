@@ -120,7 +120,7 @@ export default function AddToCartModal({ product }: AddToCartModal) {
     },
     onSuccess: () => {
       setClearState()
-      router.push("/cart")
+      window.location.reload()
       return toast({
         title: "Success!",
         description: "Added item to cart.",

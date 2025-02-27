@@ -6,11 +6,17 @@ import { features } from "@/lib/product-features"
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import HeroTwo from "@/components/Assets/Kaleidoskye Hero_Two.png"
 import Hero from "@/components/Assets/Kaleidoskye Hero.png"
+import Logo from "@/components/Assets/Logo.png"
 import FeaturesCard from "@/components/PageHome/FeaturesCards"
 
 export default async function AssetsPage() {
   return (
     <section className="relative min-h-screen w-full items-center overflow-hidden bg-background py-5 md:py-10">
+      <Image
+        src={Logo}
+        alt="kaleidoskye-party-cannons"
+        className="mx-auto w-1/2 min-w-52"
+      />
       <Image
         src={HeroTwo}
         alt="customised-powder-and-confetti-cannon-poppers"

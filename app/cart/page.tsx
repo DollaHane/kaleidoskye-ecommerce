@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
 import { useSession } from "next-auth/react"
-import MiniCartEmpty from "@/components/PageCart/MiniCartEmpty"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -17,18 +17,22 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import CartItemCard from "@/components/PageCart/CartItemCard"
+import MiniCartEmpty from "@/components/PageCart/MiniCartEmpty"
 
 export default function CartPage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const { cartItems, setRemoveCartItem } = useCartStore()
+  const { cartItems } = useCartStore()
+  const [checkoutDisabled, setCheckoutDisabled] = useState<boolean>(true)
 
-  const shipping = 150
+  let shipping = 0
   let subTotal = 0
   if (cartItems && cartItems.length > 0) {
     for (let i = 0; i < cartItems.length; i++) {
       subTotal = subTotal + cartItems[i].totalPrice
     }
+    shipping = 150
+    setCheckoutDisabled(false)
   }
   let total = subTotal + shipping
 
@@ -58,17 +62,14 @@ export default function CartPage() {
               </CardHeader>
               <CardContent className="flex flex-col gap-10">
                 {cartItems.length > 0 ? (
-
                   cartItems.map((item) => (
                     <div key={item.id}>
                       <CartItemCard cartItem={item} />
                     </div>
                   ))
-                ):(
-                  <MiniCartEmpty/>
-                )
-                
-                }
+                ) : (
+                  <MiniCartEmpty />
+                )}
               </CardContent>
             </Card>
           </div>
@@ -102,7 +103,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <Link href="/checkout">
-                  <Button className="mt-5 w-full" size="lg">
+                  <Button className="mt-5 w-full" size="lg" disabled={checkoutDisabled}>
                     Checkout
                   </Button>
                 </Link>

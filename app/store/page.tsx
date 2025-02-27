@@ -5,7 +5,7 @@ import ProductCard from "@/components/PageProduct/ProductCard"
 
 export default function StorePage() {
   return (
-    <section className="container min-h-screen items-center bg-background">
+    <section className="container min-h-screen items-center bg-background mb-10">
       <div className="mx-auto h-full w-11/12 md:w-8/12">
         <h1 className="w-full py-5 text-left text-3xl font-semibold">
           All products
@@ -15,9 +15,6 @@ export default function StorePage() {
           {products.map((prod: Cannon) => (
             <ProductCard product={prod} />
           ))}
-        </div>
-        <div>
-          <p></p>
         </div>
       </div>
     </section>
