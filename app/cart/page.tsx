@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
@@ -32,9 +32,16 @@ export default function CartPage() {
       subTotal = subTotal + cartItems[i].totalPrice
     }
     shipping = 150
-    setCheckoutDisabled(false)
   }
   let total = subTotal + shipping
+
+  useEffect(() => {
+    if (total > 0) {
+      setCheckoutDisabled(false)
+    } else {
+      setCheckoutDisabled(true)
+    }
+  }, [total]);
 
   return (
     <section className="container min-h-screen items-center bg-background pb-10">
