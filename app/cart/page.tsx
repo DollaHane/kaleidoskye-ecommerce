@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
 import { useSession } from "next-auth/react"
-
+import MiniCartEmpty from "@/components/PageCart/MiniCartEmpty"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -57,11 +57,18 @@ export default function CartPage() {
                 <CardDescription>Manage your cart content.</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-10">
-                {cartItems.map((item) => (
-                  <div key={item.id}>
-                    <CartItemCard cartItem={item} />
-                  </div>
-                ))}
+                {cartItems.length > 0 ? (
+
+                  cartItems.map((item) => (
+                    <div key={item.id}>
+                      <CartItemCard cartItem={item} />
+                    </div>
+                  ))
+                ):(
+                  <MiniCartEmpty/>
+                )
+                
+                }
               </CardContent>
             </Card>
           </div>

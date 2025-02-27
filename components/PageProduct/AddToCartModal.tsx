@@ -186,7 +186,7 @@ export default function AddToCartModal({ product }: AddToCartModal) {
                     <hr />
                     <ConfettiSelection />
                   </div>
-                  <ModalFooter className="mt-5 gap-4">
+                  <ModalFooter className="mt-5 gap-4 px-0">
                     <CloseButton />
                     <Button
                       variant="default"
@@ -221,7 +221,7 @@ export default function AddToCartModal({ product }: AddToCartModal) {
                       selectedConfetti={selectedConfetti}
                     />
                   </div>
-                  <ModalFooter className="mt-10 gap-4">
+                  <ModalFooter className="mt-0 gap-4 px-0">
                     <Button
                       variant="secondary"
                       onClick={() => setStep(step - 1)}
