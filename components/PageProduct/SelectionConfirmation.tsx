@@ -5,7 +5,6 @@ import { AlertTriangle } from "lucide-react"
 import { ProductImage } from "@/types/product-image"
 import { Cannon } from "@/lib/product-attributes"
 
-import { Divider } from "../ui/divider"
 import { Input } from "../ui/input"
 
 interface SelectionConfirmationProps {

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
 import { useProductStore } from "@/store/product-store"
 import { useMutation } from "@tanstack/react-query"
+import axios from "axios"
+import { AxiosError } from "axios"
 import { AnimatePresence, motion } from "framer-motion"
 import { ulid } from "ulid"
 
@@ -22,8 +24,6 @@ import {
 import { Button } from "@/components/ui/button"
 
 import { Icons } from "../icons"
-import { Divider } from "../ui/divider"
-import { ScrollArea } from "../ui/scroll-area"
 import ConfettiSelection, { confettiImages } from "./ConfettiSelection"
 import PowderSelection, { powderImages } from "./PowderSelection"
 import SelectionConfirmation from "./SelectionConfirmation"
@@ -33,9 +33,9 @@ interface AddToCartModal {
 }
 
 export default function AddToCartModal({ product }: AddToCartModal) {
-  const router = useRouter()
   const [step, setStep] = useState<number>(0)
   const [disabled, setDisabled] = useState<boolean>(true)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const {
     noConfettiNeeded,
     noPowderNeeded,
@@ -116,14 +116,49 @@ export default function AddToCartModal({ product }: AddToCartModal) {
         noConfetti: noConfetti,
         noPowder: noPowder,
       }
-      setAddCartItem(payload)
+      const response = await axios.post("/api/add-to-cart", payload)
+      console.log("Add To Cart: ", response)
+    },
+    onError: (error: AxiosError) => {
+      setIsSubmitting(false)
+      if (error.response?.status === 400) {
+        return toast({
+          title: "Data Validation Error.",
+          description:
+            "There was an error processing the data provided. Please try again.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 401) {
+        return toast({
+          title: "Authorisation Error.",
+          description: "Operation was not authorised, please login.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 429) {
+        return toast({
+          title: "Too Many Requests.",
+          description: "Please wait 30sec before trying again.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 500) {
+        return toast({
+          title: "Server Error.",
+          description:
+            "Failed to complete operation due to a server error. Please try again.",
+          variant: "destructive",
+        })
+      }
     },
     onSuccess: () => {
+      setIsSubmitting(false)
       setClearState()
       window.location.reload()
       return toast({
         title: "Success!",
-        description: "Added item to cart.",
+        description: "Added to cart.",
       })
     },
     onSettled: async (_, error) => {
@@ -149,6 +184,7 @@ export default function AddToCartModal({ product }: AddToCartModal) {
       powderPrice: cartPowderPrice,
       confettiPrice: cartConfettiPrice,
     }
+    setIsSubmitting(true)
     submitToCart(payload)
   }
 
