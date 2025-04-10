@@ -144,6 +144,7 @@ export const ModalBody = memo(
     return memoizedAnimatePresence
   }
 )
+ModalBody.displayName = "ModalBody"
 
 export const ModalContent = ({
   children,
