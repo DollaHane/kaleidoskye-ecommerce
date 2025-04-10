@@ -42,7 +42,7 @@ export default async function NavBar() {
           <div className="z-50 flex gap-8">
             <HydrationBoundary state={dehydrate(queryClient)}>
               <LinkNavigation href="/account" label="Account" />
-              <CartNavigation href="/cart" label="Cart" />
+              <CartNavigation />
             </HydrationBoundary>
           </div>
         ) : (

@@ -29,6 +29,7 @@ export const ModalProvider = memo(({ children }: { children: ReactNode }) => {
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
 })
+ModalProvider.displayName = "ModalProvider"
 
 export const useModal = () => {
   const context = useContext(ModalContext)
@@ -45,6 +46,7 @@ export const Modal = memo(function Modal({
 }) {
   return <ModalProvider>{children}</ModalProvider>
 })
+Modal.displayName = "Modal"
 
 export const ModalTrigger = memo(
   ({ children, className }: { children: ReactNode; className?: string }) => {
@@ -62,6 +64,7 @@ export const ModalTrigger = memo(
     )
   }
 )
+ModalTrigger.displayName = "ModalTrigger"
 
 export const ModalBody = memo(
   ({ children, className }: { children: ReactNode; className?: string }) => {

@@ -14,10 +14,13 @@ import Product from "@/components/Assets/Product.png"
 import MiniCartEmpty from "./MiniCartEmpty"
 import MiniCartSkeleton from "./MiniCartSkeleton"
 
-export default function MiniCart() {
+interface MiniCartProps {
+  cartItems: RedisCartItem[]
+  isFetching: boolean
+}
+
+export default function MiniCart({cartItems, isFetching}: MiniCartProps) {
   const queryClient = useQueryClient()
-  const cartItems = UseGetUserCart().data as RedisCartItem[]
-  const fetchingCart = UseGetUserCart().isFetching
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [rmItemId, setRmItemId] = useState<string>("")
 
@@ -154,7 +157,7 @@ export default function MiniCart() {
               </Link>
             </div>
           </>
-        ) : fetchingCart ? (
+        ) : isFetching ? (
           <MiniCartSkeleton />
         ) : (
           <MiniCartEmpty />
