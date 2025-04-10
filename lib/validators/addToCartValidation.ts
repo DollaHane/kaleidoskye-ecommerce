@@ -38,7 +38,7 @@ export const addToCartValidation = z.object({
   noPowder: z.boolean(),
   noConfetti: z.boolean(),
   quantity: z.number().min(1, { message: "Quantity must be at least 1." }),
-  totalPrice: z.number().min(150).max(250),
+  totalPrice: z.number().min(150),
   cannonPrice: z
     .number()
     .min(products[0].priceCart, {

@@ -4,6 +4,7 @@ import {
   Children,
   cloneElement,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -19,6 +20,7 @@ import {
   useTransform,
   type SpringOptions,
 } from "framer-motion"
+import { debounce } from "lodash"
 
 import { cn } from "@/lib/utils"
 
@@ -91,34 +93,62 @@ function Dock({
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight])
   const height = useSpring(heightRow, spring)
 
+  const handleMouseMove = useCallback(
+    ({ pageX }: React.MouseEvent) => {
+      isHovered.set(1)
+      mouseX.set(pageX)
+    },
+    [isHovered, mouseX]
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    isHovered.set(0)
+    mouseX.set(Infinity)
+  }, [isHovered, mouseX])
+
+  const containerStyle = useMemo(
+    () => ({
+      height: height,
+      scrollbarWidth: "none",
+    }),
+    [height]
+  )
+
+  const innerStyle = useMemo(
+    () => ({
+      height: panelHeight,
+    }),
+    [panelHeight]
+  )
+
+  const providerValue = useMemo(
+    () => ({
+      mouseX,
+      spring,
+      distance,
+      magnification,
+    }),
+    [mouseX, spring, distance, magnification]
+  )
+
   return (
     <motion.div
-      style={{
-        height: height,
-        scrollbarWidth: "none",
-      }}
+      // @ts-ignore
+      style={containerStyle}
       className="mx-10 flex max-w-full items-start overflow-x-auto"
     >
       <motion.div
-        onMouseMove={({ pageX }) => {
-          isHovered.set(1)
-          mouseX.set(pageX)
-        }}
-        onMouseLeave={() => {
-          isHovered.set(0)
-          mouseX.set(Infinity)
-        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         className={cn(
           "mx-auto flex w-fit gap-4 rounded-2xl bg-gradient-to-b from-background to-muted px-4",
           className
         )}
-        style={{ height: panelHeight }}
+        style={innerStyle}
         role="toolbar"
         aria-label="Application dock"
       >
-        <DockProvider value={{ mouseX, spring, distance, magnification }}>
-          {children}
-        </DockProvider>
+        <DockProvider value={providerValue}>{children}</DockProvider>
       </motion.div>
     </motion.div>
   )
@@ -131,10 +161,12 @@ function DockItem({ children, className }: DockItemProps) {
 
   const isHovered = useMotionValue(0)
 
-  const mouseDistance = useTransform(mouseX, (val) => {
+  const transformMouseDistance = useCallback((val: number) => {
     const domRect = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
     return val - domRect.x - domRect.width / 2
-  })
+  }, [])
+
+  const mouseDistance = useTransform(mouseX, transformMouseDistance)
 
   const widthTransform = useTransform(
     mouseDistance,
@@ -144,25 +176,53 @@ function DockItem({ children, className }: DockItemProps) {
 
   const width = useSpring(widthTransform, spring)
 
+  const handleHoverStart = useCallback(
+    debounce(() => isHovered.set(1), 100),
+    [isHovered]
+  )
+
+  const handleHoverEnd = useCallback(
+    debounce(() => isHovered.set(0), 100),
+    [isHovered]
+  )
+
+  const handleFocus = useCallback(() => isHovered.set(1), [isHovered])
+
+  const handleBlur = useCallback(() => isHovered.set(0), [isHovered])
+
+  const memoizedStyle = useMemo(() => ({ width }), [width])
+
+  const memoizedClassName = useMemo(
+    () =>
+      cn(
+        "relative inline-flex items-center justify-center bg-transparent",
+        className
+      ),
+    [className]
+  )
+
+  const memoizedChildren = useMemo(
+    () =>
+      Children.map(children, (child) =>
+        cloneElement(child as React.ReactElement, { width, isHovered })
+      ),
+    [children, width, isHovered]
+  )
+
   return (
     <motion.div
       ref={ref}
-      style={{ width }}
-      onHoverStart={() => isHovered.set(1)}
-      onHoverEnd={() => isHovered.set(0)}
-      onFocus={() => isHovered.set(1)}
-      onBlur={() => isHovered.set(0)}
-      className={cn(
-        "relative inline-flex items-center justify-center bg-transparent",
-        className
-      )}
+      style={memoizedStyle}
+      onHoverStart={handleHoverStart}
+      onHoverEnd={handleHoverEnd}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      className={memoizedClassName}
       tabIndex={0}
       role="button"
       aria-haspopup="true"
     >
-      {Children.map(children, (child) =>
-        cloneElement(child as React.ReactElement, { width, isHovered })
-      )}
+      {memoizedChildren}
     </motion.div>
   )
 }
@@ -180,9 +240,9 @@ function DockLabel({ children, className, ...rest }: DockLabelProps) {
     return () => unsubscribe()
   }, [isHovered])
 
-  return (
-    <AnimatePresence>
-      {isVisible && (
+  const memoizedContent = useMemo(
+    () =>
+      isVisible && (
         <motion.div
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: -10 }}
@@ -197,9 +257,11 @@ function DockLabel({ children, className, ...rest }: DockLabelProps) {
         >
           {children}
         </motion.div>
-      )}
-    </AnimatePresence>
+      ),
+    [isVisible, className, children]
   )
+
+  return <AnimatePresence>{memoizedContent}</AnimatePresence>
 }
 
 function DockIcon({ children, className, ...rest }: DockIconProps) {
@@ -208,9 +270,14 @@ function DockIcon({ children, className, ...rest }: DockIconProps) {
 
   const widthTransform = useTransform(width, (val) => val / 2)
 
+  const memoizedStyle = useMemo(
+    () => ({ width: widthTransform }),
+    [widthTransform]
+  )
+
   return (
     <motion.div
-      style={{ width: widthTransform }}
+      style={memoizedStyle}
       className={cn(
         "flex items-center justify-center bg-transparent",
         className

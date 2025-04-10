@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     console.log("Rate Limit Stats:", remaining, limit, limitReached)
 
     const userId = session.user.id
-    const productId = `cannon:${ulid()}`
+    const productKey = `product:${ulid()}`
     const cartKey = `cart:${userId}`
     const currentDate = new Date()
 
@@ -55,9 +55,8 @@ export async function POST(req: Request) {
     if (!limitReached) {
       return new Response("API request limit reached", { status: 429 })
     } else {
-
-      await redis.hset(`product:${productId}`, {
-        id: productId,
+      await redis.hset(productKey, {
+        id: productKey,
         userId: userId,
         quantity: quantity,
         cannonSize: cannonSize,
@@ -73,7 +72,7 @@ export async function POST(req: Request) {
         createdAt: currentDate,
       })
 
-      const addToCart = await redis.lpush(`cart:${userId}`, `product:${productId}`)
+      const addToCart = await redis.lpush(cartKey, productKey)
 
       return new Response(`Successfully added to cart : ${addToCart}`, {
         status: 200,

@@ -2,9 +2,11 @@
 
 import React, {
   createContext,
+  memo,
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -21,15 +23,12 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined)
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
+export const ModalProvider = memo(({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false)
+  const value = useMemo(() => ({ open, setOpen }), [open])
 
-  return (
-    <ModalContext.Provider value={{ open, setOpen }}>
-      {children}
-    </ModalContext.Provider>
-  )
-}
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
+})
 
 export const useModal = () => {
   const context = useContext(ModalContext)
@@ -39,108 +38,109 @@ export const useModal = () => {
   return context
 }
 
-export function Modal({ children }: { children: ReactNode }) {
+export const Modal = memo(function Modal({
+  children,
+}: {
+  children: ReactNode
+}) {
   return <ModalProvider>{children}</ModalProvider>
-}
+})
 
-export const ModalTrigger = ({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) => {
-  const { setOpen } = useModal()
-  return (
-    <button
-      className={cn(
-        "relative overflow-hidden rounded-xl text-center text-primary",
-        className
-      )}
-      onClick={() => setOpen(true)}
-    >
-      {children}
-    </button>
-  )
-}
+export const ModalTrigger = memo(
+  ({ children, className }: { children: ReactNode; className?: string }) => {
+    const { setOpen } = useModal()
+    return (
+      <button
+        className={cn(
+          "relative overflow-hidden rounded-xl text-center text-primary",
+          className
+        )}
+        onClick={() => setOpen(true)}
+      >
+        {children}
+      </button>
+    )
+  }
+)
 
-export const ModalBody = ({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) => {
-  const { open } = useModal()
+export const ModalBody = memo(
+  ({ children, className }: { children: ReactNode; className?: string }) => {
+    const { open } = useModal()
 
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "auto"
-    }
-  }, [open])
+    useEffect(() => {
+      if (open) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = "auto"
+      }
+    }, [open])
 
-  const modalRef = useRef(null)
-  const { setOpen } = useModal()
-  useOutsideClick(modalRef, () => setOpen(false))
+    const modalRef = useRef(null)
+    const { setOpen } = useModal()
+    useOutsideClick(modalRef, () => setOpen(false))
 
-  return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-            backdropFilter: "blur(10px)",
-          }}
-          exit={{
-            opacity: 0,
-            backdropFilter: "blur(0px)",
-          }}
-          className="fixed inset-0 z-50 flex size-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
-        >
-          <Overlay />
+    const memoizedAnimatePresence = useMemo(
+      () => (
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+                backdropFilter: "blur(10px)",
+              }}
+              exit={{
+                opacity: 0,
+                backdropFilter: "blur(0px)",
+              }}
+              className="fixed inset-0 z-50 flex size-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
+            >
+              <Overlay />
 
-          <motion.div
-            ref={modalRef}
-            className={cn(
-              "relative z-50 flex max-h-[90%] min-w-[350px] max-w-[90%] flex-1 flex-col overflow-hidden rounded-2xl border border-muted bg-background shadow-md md:max-w-[80%] lg:max-w-[800px]",
-              className
-            )}
-            initial={{
-              opacity: 0,
-              scale: 0.5,
-              rotateX: 40,
-              y: 40,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotateX: 0,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.8,
-              rotateX: 10,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 15,
-            }}
-          >
-            <CloseIcon />
-            {children}
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
+              <motion.div
+                ref={modalRef}
+                className={cn(
+                  "relative z-50 flex max-h-[90%] min-w-[350px] max-w-[90%] flex-1 flex-col overflow-hidden rounded-2xl border border-muted bg-background shadow-md md:max-w-[80%] lg:max-w-[800px]",
+                  className
+                )}
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                  rotateX: 40,
+                  y: 40,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotateX: 0,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.8,
+                  rotateX: 10,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 15,
+                }}
+              >
+                <CloseIcon />
+                {children}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      ),
+      [open, className, children, setOpen]
+    )
+
+    return memoizedAnimatePresence
+  }
+)
 
 export const ModalContent = ({
   children,
@@ -171,21 +171,24 @@ export const ModalFooter = ({
 }
 
 const Overlay = ({ className }: { className?: string }) => {
-  return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-        backdropFilter: "blur(10px)",
-      }}
-      exit={{
-        opacity: 0,
-        backdropFilter: "blur(0px)",
-      }}
-      className={`fixed inset-0 z-50 size-full bg-background/50 ${className}`}
-    ></motion.div>
+  return useMemo(
+    () => (
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          backdropFilter: "blur(10px)",
+        }}
+        exit={{
+          opacity: 0,
+          backdropFilter: "blur(0px)",
+        }}
+        className={`fixed inset-0 z-50 size-full bg-background/50 ${className}`}
+      ></motion.div>
+    ),
+    [className]
   )
 }
 

@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation"
 import { useCartStore } from "@/store/cart-store"
 import { useProductStore } from "@/store/product-store"
 import { useMutation } from "@tanstack/react-query"
-import axios from "axios"
-import { AxiosError } from "axios"
+import axios, { AxiosError } from "axios"
 import { AnimatePresence, motion } from "framer-motion"
 import { ulid } from "ulid"
 
@@ -176,7 +175,8 @@ export default function AddToCartModal({ product }: AddToCartModal) {
       cannonName: product.heading,
       powder: powder,
       confetti: confetti,
-      quantity: quantity,
+      // @ts-ignore
+      quantity: parseInt(quantity),
       noPowder: noPowderNeeded,
       noConfetti: noConfettiNeeded,
       totalPrice: totalPrice,

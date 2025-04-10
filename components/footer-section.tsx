@@ -27,6 +27,63 @@ function FooterSection() {
     }
   }, [isDarkMode])
 
+  const facebookTooltip = React.useMemo(
+    () => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Icons.facebook />
+              <span className="sr-only">Facebook</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Follow us on Facebook</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
+    [Icons.facebook, siteConfig]
+  )
+
+  const instagramTooltip = React.useMemo(
+    () => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Icons.instagram />
+              <span className="sr-only">Instagram</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Follow us on Instagram</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
+    [Icons.instagram, siteConfig]
+  )
+
+  const tiktokTooltip = React.useMemo(
+    () => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" className="rounded-full">
+              <Icons.tiktok />
+              <span className="sr-only">TikTok</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Connect with us on TikTok</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
+    [Icons.tiktok, siteConfig]
+  )
+
   return (
     <footer className="relative border-t bg-accent text-foreground transition-colors duration-300">
       <div className="container mx-auto bg-accent px-4 py-12 md:px-6 lg:px-8">
@@ -80,57 +137,9 @@ function FooterSection() {
           <div className="relative">
             <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
             <div className="mb-6 flex space-x-4">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                    >
-                      <Icons.facebook />
-                      <span className="sr-only">Facebook</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Follow us on Facebook</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                    >
-                      <Icons.instagram />
-                      <span className="sr-only">Instagram</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Follow us on Instagram</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                    >
-                      <Icons.tiktok />
-                      <span className="sr-only">TikTok</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Connect with us on TikTok</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {facebookTooltip}
+              {instagramTooltip}
+              {tiktokTooltip}
             </div>
           </div>
         </div>

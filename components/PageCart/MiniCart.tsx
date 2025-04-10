@@ -1,18 +1,26 @@
-"use client"
-
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useCartStore } from "@/store/cart-store"
-import { Trash2 } from "lucide-react"
+import { UseGetUserCart } from "@/server/services"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import axios, { AxiosError } from "axios"
+import { Loader2, Trash2 } from "lucide-react"
 
+import { CartItem, RedisCartItem } from "@/types/cart-item"
+import { toast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import Product from "@/components/Assets/Product.png"
 
 import MiniCartEmpty from "./MiniCartEmpty"
+import MiniCartSkeleton from "./MiniCartSkeleton"
 
 export default function MiniCart() {
-  const { cartItems, setRemoveCartItem } = useCartStore()
+  const queryClient = useQueryClient()
+  const cartItems = UseGetUserCart().data as RedisCartItem[]
+  const fetchingCart = UseGetUserCart().isFetching
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [rmItemId, setRmItemId] = useState<string>("")
+
   let subTotal = 0
 
   if (cartItems && cartItems.length > 0) {
@@ -21,13 +29,74 @@ export default function MiniCart() {
     }
   }
 
+  const { mutate: removeCartItem } = useMutation({
+    mutationFn: async (itemId: string) => {
+      const payload = { itemId }
+      await axios.post("/api/rm-from-cart", payload)
+    },
+    onError: (error: AxiosError) => {
+      setIsSubmitting(false)
+      setRmItemId("")
+      if (error.response?.status === 400) {
+        return toast({
+          title: "Data Validation Error.",
+          description:
+            "There was an error processing the data provided. Please try again.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 401) {
+        return toast({
+          title: "Authorisation Error.",
+          description: "Operation was not authorised, please login.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 429) {
+        return toast({
+          title: "Too Many Requests.",
+          description: "Please wait 30sec before trying again.",
+          variant: "destructive",
+        })
+      }
+      if (error.response?.status === 500) {
+        return toast({
+          title: "Server Error.",
+          description:
+            "Failed to complete operation due to a server error. Please try again.",
+          variant: "destructive",
+        })
+      }
+    },
+    onSuccess: () => {
+      setIsSubmitting(false)
+      setRmItemId("")
+      return toast({
+        title: "Item Removed",
+        description: "Successfully removed item from cart.",
+      })
+    },
+    onSettled: async (_, error) => {
+      if (error) {
+        console.log("onSettled error:", error)
+      } else {
+        await queryClient.invalidateQueries({ queryKey: ["userCart"] })
+      }
+    },
+  })
+
+  function removeCartItemSubmit(itemId: string) {
+    setRmItemId(itemId)
+    removeCartItem(itemId)
+  }
+
   return (
-    <div className="mx-auto max-w-md p-6">
+    <div className="mx-auto max-w-md">
       <h1 className="mb-4 text-xl font-semibold">Cart</h1>
       <div className="space-y-4">
         {cartItems && cartItems.length > 0 ? (
           <>
-            {cartItems.map((item) => (
+            {cartItems.map((item: CartItem) => (
               <div key={item.id} className="flex flex-row items-center gap-4">
                 <div className="size-12 shrink-0 overflow-hidden rounded-full border">
                   <Image
@@ -53,11 +122,21 @@ export default function MiniCart() {
                       Quantity: {item.quantity}
                     </span>
                     <button
-                      onClick={() => setRemoveCartItem(item.id)}
+                      onClick={() => removeCartItemSubmit(item.id)}
                       className="inline-flex items-center text-sm text-muted-foreground hover:text-destructive"
                     >
-                      <Trash2 className="mr-1 size-4" />
-                      Remove
+                      {rmItemId === item.id && !isSubmitting ? (
+                        <div className="flex w-16 items-center justify-center">
+                          <Loader2 className="size-4 animate-spin" />
+                        </div>
+                      ) : (
+                        <div className="flex w-16 items-center justify-end gap-1">
+                          <div className="size-4">
+                            <Trash2 className="size-4" />
+                          </div>
+                          <p>Remove</p>
+                        </div>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -75,6 +154,8 @@ export default function MiniCart() {
               </Link>
             </div>
           </>
+        ) : fetchingCart ? (
+          <MiniCartSkeleton />
         ) : (
           <MiniCartEmpty />
         )}

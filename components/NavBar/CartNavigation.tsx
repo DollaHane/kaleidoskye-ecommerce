@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import Link from "next/link"
+import React, { useMemo } from "react"
 import { useCartStore } from "@/store/cart-store"
 import { ShoppingCart } from "lucide-react"
 
@@ -10,7 +9,6 @@ import MiniCartEmpty from "../PageCart/MiniCartEmpty"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/DropdownMenu"
 
@@ -30,6 +28,11 @@ export default function CartNavigation({ href, label }: LinkProps) {
     },
   ]
 
+  const cartMenuContent = useMemo(
+    () => (cart.length > 0 ? <MiniCart /> : <MiniCartEmpty />),
+    [cart]
+  )
+
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
@@ -43,7 +46,7 @@ export default function CartNavigation({ href, label }: LinkProps) {
           className="absolute -right-10 w-[80vw] min-w-[320px] max-w-96"
           sideOffset={20}
         >
-          {cart.length > 0 ? <MiniCart /> : <MiniCartEmpty />}
+          {cartMenuContent}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

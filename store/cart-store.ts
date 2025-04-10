@@ -1,12 +1,9 @@
 "use client"
 
-import { z } from "zod"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-import { addToCartValidation } from "@/lib/validators/addToCartValidation"
-
-export type CartItem = z.infer<typeof addToCartValidation>
+import { CartItem } from "@/types/cart-item"
 
 type CartStoreState = {
   cartItems: CartItem[]
@@ -49,8 +46,12 @@ export const useCartStore = create<CartStore>()(
       setQuantity: (id: string, quantity: number) => {
         set((state: CartStoreState) => {
           let updatedState = []
-          for (let i=0; i<state.cartItems.length; i++){
-            const totalPrice = (state.cartItems[i].cannonPrice + state.cartItems[i].powderPrice + state.cartItems[i].confettiPrice) * quantity
+          for (let i = 0; i < state.cartItems.length; i++) {
+            const totalPrice =
+              (state.cartItems[i].cannonPrice +
+                state.cartItems[i].powderPrice +
+                state.cartItems[i].confettiPrice) *
+              quantity
             if (state.cartItems[i].id === id) {
               state.cartItems[i].quantity = quantity
               state.cartItems[i].totalPrice = totalPrice
@@ -58,10 +59,10 @@ export const useCartStore = create<CartStore>()(
             updatedState.push(state.cartItems[i])
           }
           return {
-            cartItems: [...updatedState]
+            cartItems: [...updatedState],
           }
         })
-      }
+      },
     }),
     { name: "cart-store" }
   )
