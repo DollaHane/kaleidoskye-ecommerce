@@ -5,6 +5,8 @@ export type Cannon = {
   priceCart: number
 }
 
+const shipping = 150
+
 // These values have global effects:
 export const products = [
   {
@@ -12,12 +14,14 @@ export const products = [
     heading: `24" Cannon`,
     priceAd: 150,
     priceCart: 100,
+    priceShipping: shipping
   },
   {
     id: "32INCH",
     heading: `32" Cannon`,
     priceAd: 200,
     priceCart: 150,
+    priceShipping: shipping
   },
 ]
 

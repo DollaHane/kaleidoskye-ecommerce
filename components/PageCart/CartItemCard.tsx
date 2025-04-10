@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Image from "next/image"
-import { CartItem, useCartStore } from "@/store/cart-store"
 import { Trash2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -10,22 +9,18 @@ import { confettiImages } from "@/components/PageProduct/ConfettiSelection"
 import { powderImages } from "@/components/PageProduct/PowderSelection"
 
 import { Input } from "../ui/input"
+import { RedisCartItem } from "@/types/cart-item"
 
 interface CartItemCardProps {
-  cartItem: CartItem
+  cartItem: RedisCartItem
 }
 
 export default function CartItemCard({ cartItem }: CartItemCardProps) {
   const isAbove450pixels = useMediaQuery("(min-width:450px)")
   const isAbove380pixels = useMediaQuery("(min-width:380px)")
-  const { setRemoveCartItem, setQuantity } = useCartStore()
   const [updateQuantity, setUpdateQuantity] = useState<number>(
     cartItem.quantity
   )
-
-  useEffect(() => {
-    setQuantity(cartItem.id, updateQuantity)
-  }, [updateQuantity])
 
   let powder = []
   let confetti = []
@@ -112,7 +107,6 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
             onChange={(event: any) => setUpdateQuantity(event.target.value)}
           />
           <button
-            onClick={() => setRemoveCartItem(cartItem.id)}
             className="items-center text-sm text-muted-foreground hover:text-destructive"
           >
             <Trash2 className="mr-1 size-6" />

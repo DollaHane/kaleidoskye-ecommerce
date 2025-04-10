@@ -1,11 +1,13 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useCartStore } from "@/store/cart-store"
+import { UseGetUserCart } from "@/server/services"
 import { useSession } from "next-auth/react"
 
+import { RedisCartItem } from "@/types/cart-item"
+import { products } from "@/lib/product-attributes"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -22,7 +24,9 @@ import MiniCartEmpty from "@/components/PageCart/MiniCartEmpty"
 export default function CartPage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const { cartItems } = useCartStore()
+  // const { cartItems } = useCartStore()
+  const cartItems = UseGetUserCart().data as RedisCartItem[]
+  const isFetching = UseGetUserCart().isFetching
   const [checkoutDisabled, setCheckoutDisabled] = useState<boolean>(true)
 
   let shipping = 0
@@ -31,7 +35,7 @@ export default function CartPage() {
     for (let i = 0; i < cartItems.length; i++) {
       subTotal = subTotal + cartItems[i].totalPrice
     }
-    shipping = 150
+    shipping = products[0].priceShipping
   }
   let total = subTotal + shipping
 
@@ -42,6 +46,10 @@ export default function CartPage() {
       setCheckoutDisabled(true)
     }
   }, [total])
+
+  function handleSigninRouter() {
+    router.push("./signin")
+  }
 
   return (
     <section className="container mb-10 min-h-screen items-center bg-background">
@@ -54,7 +62,7 @@ export default function CartPage() {
                 Sign in for a better experience.
               </p>
             </div>
-            <Button variant="default" onClick={() => router.push("./signin")}>
+            <Button variant="default" onClick={handleSigninRouter}>
               Sign in
             </Button>
           </div>
@@ -68,7 +76,11 @@ export default function CartPage() {
                 <CardDescription>Manage your cart content.</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-10">
-                {cartItems.length > 0 ? (
+                {isFetching ? (
+                  <div className="animate-pulse">
+                    <MiniCartEmpty />
+                  </div>
+                ) : cartItems.length > 0 ? (
                   cartItems.map((item) => (
                     <div key={item.id}>
                       <CartItemCard cartItem={item} />
