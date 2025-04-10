@@ -1,9 +1,8 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
-import { useCartStore } from "@/store/cart-store"
 import { HelpCircle } from "lucide-react"
+import { products } from "@/lib/product-attributes"
 
 import {
   Card,
@@ -16,11 +15,13 @@ import {
 
 import { Button } from "../ui/button"
 import CartItemCardCheckout from "./CartItemCardCheckout"
+import { UseGetUserCart } from "@/server/services"
+import { RedisCartItem } from "@/types/cart-item"
 
 export default function OrderSummaryCheckout() {
-  const { cartItems } = useCartStore()
+  const cartItems = UseGetUserCart().data as RedisCartItem[]
 
-  const shipping = 150
+  const shipping = products[0].priceShipping
   let subTotal = 0
   if (cartItems && cartItems.length > 0) {
     for (let i = 0; i < cartItems.length; i++) {
@@ -53,10 +54,6 @@ export default function OrderSummaryCheckout() {
             <div className="flex justify-between">
               <span>Shipping</span>
               <span>R {shipping}.00</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Taxes</span>
-              <span>R 0.00</span>
             </div>
             <div className="flex justify-between border-t pt-2 font-medium">
               <span>Total</span>

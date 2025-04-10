@@ -2,12 +2,12 @@
 
 import React from "react"
 import Image from "next/image"
-import { CartItem, useCartStore } from "@/store/cart-store"
 
 import Product from "@/components/Assets/Product.png"
+import { RedisCartItem } from "@/types/cart-item"
 
 interface CartItemCardCheckoutProps {
-  cartItem: CartItem
+  cartItem: RedisCartItem
 }
 
 export default function CartItemCardCheckout({
