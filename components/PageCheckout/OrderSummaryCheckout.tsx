@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -18,11 +17,13 @@ import {
 import { Button } from "../ui/button"
 import CartItemCardCheckout from "./CartItemCardCheckout"
 
-export default async function OrderSummaryCheckout() {
-  // const cartItems = UseGetUserCart().data as RedisCartItem[]
-  const cartItems = (await getUserCart()) as RedisCartItem[]
-  console.log("cart:", cartItems)
+interface OrderSummaryCheckoutProps {
+  cartItems: RedisCartItem[]
+}
 
+export default async function OrderSummaryCheckout({
+  cartItems,
+}: OrderSummaryCheckoutProps) {
   const shipping = products[0].priceShipping
   let subTotal = 0
   if (cartItems && cartItems.length > 0) {

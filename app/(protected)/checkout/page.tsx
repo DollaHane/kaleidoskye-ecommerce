@@ -1,7 +1,9 @@
 import React from "react"
 import { redirect } from "next/navigation"
+import { getUserCart } from "@/server/actions"
 import { getServerSession } from "next-auth"
 
+import { RedisCartItem } from "@/types/cart-item"
 import { authOptions } from "@/lib/auth/auth-options"
 import OrderSummaryCheckout from "@/components/PageCheckout/OrderSummaryCheckout"
 import ShippingDetails from "@/components/PageCheckout/ShippingDetails"
@@ -12,6 +14,7 @@ export default async function CheckoutPage() {
   if (!session) {
     redirect("/signin")
   }
+  const cartItems = (await getUserCart()) as RedisCartItem[]
 
   return (
     <section className="container mb-10 min-h-screen items-center bg-background">
@@ -21,7 +24,7 @@ export default async function CheckoutPage() {
             <ShippingDetails />
           </div>
           <div>
-            <OrderSummaryCheckout />
+            <OrderSummaryCheckout cartItems={cartItems} />
           </div>
         </div>
       </div>
