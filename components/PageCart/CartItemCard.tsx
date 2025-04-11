@@ -1,15 +1,15 @@
-import React, { useState } from "react"
+import React from "react"
 import Image from "next/image"
-import { Trash2 } from "lucide-react"
 
+import { RedisCartItem } from "@/types/cart-item"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import Product from "@/components/Assets/Product.png"
 import { confettiImages } from "@/components/PageProduct/ConfettiSelection"
 import { powderImages } from "@/components/PageProduct/PowderSelection"
 
-import { Input } from "../ui/input"
-import { RedisCartItem } from "@/types/cart-item"
+import CartItemDelete from "./CartItemDelete"
+import CartItemUpdateQuantity from "./CartItemUpdateQuantity"
 
 interface CartItemCardProps {
   cartItem: RedisCartItem
@@ -18,9 +18,6 @@ interface CartItemCardProps {
 export default function CartItemCard({ cartItem }: CartItemCardProps) {
   const isAbove450pixels = useMediaQuery("(min-width:450px)")
   const isAbove380pixels = useMediaQuery("(min-width:380px)")
-  const [updateQuantity, setUpdateQuantity] = useState<number>(
-    cartItem.quantity
-  )
 
   let powder = []
   let confetti = []
@@ -98,19 +95,11 @@ export default function CartItemCard({ cartItem }: CartItemCardProps) {
           <p className="text-sm text-muted-foreground">Quantity:</p>
         </div>
         <div className="flex w-full items-center justify-start gap-4">
-          <Input
-            type="number"
-            min={1}
-            max={20}
-            className="w-16"
-            value={updateQuantity}
-            onChange={(event: any) => setUpdateQuantity(event.target.value)}
+          <CartItemUpdateQuantity
+            quantity={cartItem.quantity}
+            product={cartItem}
           />
-          <button
-            className="items-center text-sm text-muted-foreground hover:text-destructive"
-          >
-            <Trash2 className="mr-1 size-6" />
-          </button>
+          <CartItemDelete productKey={cartItem.id} />
         </div>
       </div>
     </div>

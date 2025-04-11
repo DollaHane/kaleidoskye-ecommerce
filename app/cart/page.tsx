@@ -54,20 +54,6 @@ export default function CartPage() {
   return (
     <section className="container mb-10 min-h-screen items-center bg-background">
       <div className="mx-auto h-full w-11/12 pt-10 md:w-10/12">
-        {!session?.user.id && (
-          <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
-            <div className="pb-5 text-center sm:pb-0 sm:text-start">
-              <h2 className="text-lg font-medium">Already have an account?</h2>
-              <p className="text-sm text-muted-foreground">
-                Sign in for a better experience.
-              </p>
-            </div>
-            <Button variant="default" onClick={handleSigninRouter}>
-              Sign in
-            </Button>
-          </div>
-        )}
-
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <Card>
@@ -133,6 +119,21 @@ export default function CartPage() {
               </CardContent>
             </Card>
           </div>
+          {!session?.user.id && (
+            <div className="mb-8 flex flex-col items-center justify-between sm:flex-row">
+              <div className="pb-5 text-center sm:pb-0 sm:text-start">
+                <h2 className="text-lg font-medium">
+                  Already have an account?
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Sign in for a better experience.
+                </p>
+              </div>
+              <Button variant="default" onClick={handleSigninRouter}>
+                Sign in
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </section>

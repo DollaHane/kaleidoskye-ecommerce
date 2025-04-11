@@ -1,9 +1,11 @@
-"use client"
+// "use client"
 
 import React from "react"
+import { getUserCart } from "@/server/actions"
 import { HelpCircle } from "lucide-react"
-import { products } from "@/lib/product-attributes"
 
+import { RedisCartItem } from "@/types/cart-item"
+import { products } from "@/lib/product-attributes"
 import {
   Card,
   CardContent,
@@ -15,11 +17,11 @@ import {
 
 import { Button } from "../ui/button"
 import CartItemCardCheckout from "./CartItemCardCheckout"
-import { UseGetUserCart } from "@/server/services"
-import { RedisCartItem } from "@/types/cart-item"
 
-export default function OrderSummaryCheckout() {
-  const cartItems = UseGetUserCart().data as RedisCartItem[]
+export default async function OrderSummaryCheckout() {
+  // const cartItems = UseGetUserCart().data as RedisCartItem[]
+  const cartItems = (await getUserCart()) as RedisCartItem[]
+  console.log("cart:", cartItems)
 
   const shipping = products[0].priceShipping
   let subTotal = 0
