@@ -62,16 +62,16 @@ export default function CartPage() {
                 <CardDescription>Manage your cart content.</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-10">
-                {isFetching ? (
-                  <div className="animate-pulse">
-                    <MiniCartEmpty />
-                  </div>
-                ) : cartItems.length > 0 ? (
+                {cartItems && cartItems.length > 0 ? (
                   cartItems.map((item) => (
                     <div key={item.id}>
                       <CartItemCard cartItem={item} />
                     </div>
                   ))
+                ) : isFetching ? (
+                  <div className="animate-pulse">
+                    <MiniCartEmpty />
+                  </div>
                 ) : (
                   <MiniCartEmpty />
                 )}
